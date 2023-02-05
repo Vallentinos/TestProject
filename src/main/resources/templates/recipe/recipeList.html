@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>레시피 목록</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/recipe/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/recipe/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/recipe/css/magnific-popup.css">
+    <link rel="stylesheet" href="/recipe/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/recipe/css/themify-icons.css">
+    <link rel="stylesheet" href="/recipe/css/nice-select.css">
+    <link rel="stylesheet" href="/recipe/css/flaticon.css">
+    <link rel="stylesheet" href="/recipe/css/gijgo.css">
+    <link rel="stylesheet" href="/recipe/css/animate.min.css">
+    <link rel="stylesheet" href="/recipe/css/slick.css">
+    <link rel="stylesheet" href="/recipe/css/slicknav.css">
+    <link rel="stylesheet" href="/recipe/css/style.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    
+</head>
+
+<body>
+<th:block layout:fragment="content">
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+    <!-- Start Main Top -->
+  
+    <!-- recepie_area_start  -->
+    <div class="recepie_area plus_padding">
+    <hr>
+     <div style="text-align: center;"><a th:href="@{../food/foodList}">한식</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{../food/foodList}">양식</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{../food/foodList}">디저트</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{../food/foodList}">최신순</a> / <a th:href="@{../food/foodList}">인기순</a>
+     </div>
+    
+     <hr>
+     
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_1.png" alt="">
+                        </div>
+                        <h3>Egg Manchurian</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_2.png" alt="">
+                        </div>
+                        <h3>Pure Vegetable Bowl</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_3.png" alt="">
+                        </div>
+                        <h3>Egg Masala Ramen</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_1.png" alt="">
+                        </div>
+                        <h3>Egg Manchurian</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_2.png" alt="">
+                        </div>
+                        <h3>Pure Vegetable Bowl</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_3.png" alt="">
+                        </div>
+                        <h3>Egg Masala Ramen</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_1.png" alt="">
+                        </div>
+                        <h3>Egg Manchurian</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_2.png" alt="">
+                        </div>
+                        <h3>Pure Vegetable Bowl</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single_recepie text-center">
+                        <div class="recepie_thumb">
+                            <img src="/recipe/img/recepie/recpie_3.png" alt="">
+                        </div>
+                        <h3>Egg Masala Ramen</h3>
+                        <span>Appetizer</span>
+                        <p>Time Needs: 30 Mins</p>
+                        <a href="#" class="line_btn">View Full Recipe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /recepie_area_start  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+    <!-- JS here -->
+    <script src="/recipe/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="/recipe/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/recipe/js/popper.min.js"></script>
+    <script src="/recipe/js/bootstrap.min.js"></script>
+    <script src="/recipe/js/owl.carousel.min.js"></script>
+    <script src="/recipe/js/isotope.pkgd.min.js"></script>
+    <script src="/recipe/js/ajax-form.js"></script>
+    <script src="/recipe/js/waypoints.min.js"></script>
+    <script src="/recipe/js/jquery.counterup.min.js"></script>
+    <script src="/recipe/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/recipe/js/scrollIt.js"></script>
+    <script src="/recipe/js/jquery.scrollUp.min.js"></script>
+    <script src="/recipe/js/wow.min.js"></script>
+    <script src="/recipe/js/nice-select.min.js"></script>
+    <script src="/recipe/js/jquery.slicknav.min.js"></script>
+    <script src="/recipe/js/jquery.magnific-popup.min.js"></script>
+    <script src="/recipe/js/plugins.js"></script>
+    <script src="/recipe/js/gijgo.min.js"></script>
+
+    <!--contact js-->
+    <script src="/recipe/js/contact.js"></script>
+    <script src="/recipe/js/jquery.ajaxchimp.min.js"></script>
+    <script src="/recipe/js/jquery.form.js"></script>
+    <script src="/recipe/js/jquery.validate.min.js"></script>
+    <script src="/recipe/js/mail-script.js"></script>
+
+    <script src="/recipe/js/main.js"></script>
+</th:block>
+</body>
+
+</html>
