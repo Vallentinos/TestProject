@@ -54,5 +54,15 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Override
+	public Member findMemberId(String name, String phone) {
+		return memberRepository.findMemberId(name, phone);
+	}
+
+	@Override
+	public Member findMemberPwd(String username, String phone) {
+		return memberRepository.findMemberPwd(username, phone);
+	}
+
 
 }

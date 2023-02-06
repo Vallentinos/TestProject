@@ -115,4 +115,32 @@ public class MemberController {
     public String memberCheck() {
         return "sign/findMember";
     }
+
+    @PostMapping("/findId")
+    public String findId(Member member, Model model) {
+        Member memberId = memberService.findMemberId(member.getName(), member.getPhone());
+        log.info("아이디 찾기: " + memberId);
+
+        if(memberId == null) {
+            model.addAttribute("find", 0);
+        } else {
+            model.addAttribute("find", 1);
+            model.addAttribute("member", memberId);
+        }
+        return "sign/findIdAndPwd";
+    }
+
+    @PostMapping("/findPwd")
+    public String findPwd(Member member, Model model) {
+        Member memberPwd = memberService.findMemberPwd(member.getUsername(), member.getPhone());
+        log.info("비밀번호 찾기: " + memberPwd);
+
+        if(memberPwd == null) {
+            model.addAttribute("find", 0);
+        } else {
+            model.addAttribute("find", 1);
+            model.addAttribute("member", memberPwd);
+        }
+        return "sign/findIdAndPwd";
+    }
 }
