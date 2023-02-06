@@ -5,7 +5,7 @@ import java.util.Date;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
+@ToString(exclude = "member")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +13,7 @@ import lombok.*;
 public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long board_seq;
+	private Long boardSeq;
 
 	private String title;
 	private String writer;
@@ -25,14 +25,14 @@ public class Board {
 //	@ManyToOne
 //	@JoinColumn(name="username", nullable=false, updatable=false)
 //	private Member member;
-//
-	public Board() {
 
-	}
-//
 //	public void setMember(Member member) {
 //		this.member = member;
 //		member.getBoardList().add(this);
 //	}
+
+	public Board() {
+
+	}
 
 }

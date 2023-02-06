@@ -18,17 +18,19 @@ public class BoardRepositoryTest {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-//	@Test
-//	public void saveBoard() {
-//
-//		BoardDTO boardDTO = BoardDTO.builder()
-//				.title("게시글 테스트 제목")
-//				.content("게시글 테스트 내용")
-//				.regdate(new Date())
-//				.build();
-//
-//		Board board = boardDTO.toEntity(boardDTO);
-//		boardRepository.save(board);
-//	}
+	@Test
+	public void saveBoard() {
+
+		for(int i=0; i<20; i++) {
+
+			Board board = new Board();
+
+			board.setTitle("게시글 테스트 테스트" + i);
+			board.setWriter("user2");
+			board.setContent("게시글 내용........" + i);
+			board.setRegdate(new Date());
+			boardRepository.save(board);
+		}
+	}
 
 }

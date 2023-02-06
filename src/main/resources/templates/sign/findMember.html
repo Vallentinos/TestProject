@@ -17,7 +17,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 text-center mb-5">
-                <h2 class="heading-section">Welcome Recifood</h2>
+                <h2 class="heading-section">아이디/비밀번호 찾기</h2>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -27,39 +27,41 @@
                         <div class="w-100">
 <!--                            <h3 class="mb-4">Sign In</h3>-->
                         </div>
-                        <div class="w-100">
-                            <p class="social-media d-flex justify-content-end">
-                                <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-google"></span></a>
-                                <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-                            </p>
-                        </div>
                     </div>
                     <form class="login-form" method="post" th:action="@{/login}">
                         <div class="form-group">
                             <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-user"></span></div>
-                            <input type="text" id="username" name="username" class="form-control rounded-left" placeholder="아이디">
+                            <input type="text" id="name" name="name" class="form-control rounded-left" placeholder="이름">
                         </div>
                         <div class="form-group">
-                            <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-lock"></span></div>
-                            <input type="password" id="password" name="password" class="form-control rounded-left" placeholder="비밀번호">
+                            <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-phone"></span></div>
+                            <input type="password" id="phone" name="phone" class="form-control rounded-left" placeholder="휴대전화">
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <div class="w-100">
-                                <label class="checkbox-wrap checkbox-primary mb-0">자동 로그인
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
                             <div class="w-100 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary rounded submit">Login</button>
+                                <button type="submit" class="btn btn-primary rounded submit">아이디 찾기</button>
                             </div>
                         </div>
-                        <div class="form-group mt-4">
-                            <div class="w-100 text-center">
-                                <p class="mb-1">아직 Recifood의 회원이 아니신가요?  <a href="/join">회원 가입</a></p>
-                                <p><a href="/findMember">아이디/비밀번호 찾기</a></p>
-                            </div>
+                    </form>
+                    <div class="form-group">
+                        <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-user"></span></div>
+                        <input type="text" id="username" name="username" class="form-control rounded-left" placeholder="아이디">
+                    </div>
+                    <div class="form-group">
+                        <div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-phone"></span></div>
+                        <input type="password" id="password" name="password" class="form-control rounded-left" placeholder="휴대전화">
+                    </div>
+                    <div class="form-group d-flex align-items-center">
+                        <div class="w-100 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary rounded submit">비밀번호 찾기</button>
                         </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        <div class="w-100 text-center">
+                            <p class="mb-1">아이디와 비밀번호가 기억나셨나요? <br>
+                                <a href="/login">로그인하러 가기</a></p>
+                        </div>
+                    </div>
                     </form>
                 </div>
             </div>

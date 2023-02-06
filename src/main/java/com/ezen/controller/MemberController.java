@@ -22,7 +22,7 @@ import java.util.Optional;
 @Controller
 @SessionAttributes("member")
 @Log4j2
-public class LoginController {
+public class MemberController {
 
     @Autowired
     private MemberService memberService;
@@ -109,5 +109,10 @@ public class LoginController {
         model.addAttribute("member", memberRepository.save(member));
 
         return "redirect:/member";
+    }
+
+    @GetMapping("/findMember")
+    public String memberCheck() {
+        return "sign/findMember";
     }
 }
