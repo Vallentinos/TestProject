@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static com.ezen.entity.QBoard.board;
+
 @Controller
 @Log4j2
 public class BoardController {
@@ -49,20 +51,21 @@ public class BoardController {
 
     @GetMapping("/deleteBoard")
     public String deleteBoard(Board board) {
-        boardService.deleteBoard(board);
+        log.info(board.getBoardSeq() + "번째 게시글 삭제");
+        boardService.deleteBoard(board.getBoardSeq());
         return "redirect:/boardList";
     }
 
     @RequestMapping("/boardList")
-    public String getBoardList(Search search, Model model) {
+    public String getBoardList(@RequestParam(value = "page", defaultValue = "0") int page, Search search, Model model) {
         if(search.getSearchCondition() == null) {
             search.setSearchCondition("TITLE");
         }
         if(search.getSearchKeyword() == null) {
             search.setSearchKeyword("");
         }
-        Page<Board> boardList = boardService.getBoardList(search);
-        log.info("게시글 목록: " + boardList);
+        Page<Board> boardList = boardService.getBoardList(page, search);
+        log.info("게시글 목록: " + boardList.getContent());
         model.addAttribute("boardList", boardList);
 
         return "board/boardList";
