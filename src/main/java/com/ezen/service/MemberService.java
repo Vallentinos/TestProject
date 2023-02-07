@@ -16,7 +16,7 @@ public interface MemberService {
 	
 	List<Member> getMemberList(Member Member);
 
-	Member findMemberId(String name, String phone);
+	Member findMemberId(String name, String email);
 
-	Member findMemberPwd(String username, String phone);
+	Member findMemberPwd(String username, String email);
 }
