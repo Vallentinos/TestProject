@@ -118,7 +118,7 @@ public class MemberController {
 
     @PostMapping("/findId")
     public String findId(Member member, Model model) {
-        Member memberId = memberService.findMemberId(member.getName(), member.getPhone());
+        Member memberId = memberService.findMemberId(member.getName(), member.getEmail());
         log.info("아이디 찾기: " + memberId);
 
         if(memberId == null) {
@@ -127,12 +127,12 @@ public class MemberController {
             model.addAttribute("find", 1);
             model.addAttribute("member", memberId);
         }
-        return "sign/findIdAndPwd";
+        return "/sign/findId";
     }
 
     @PostMapping("/findPwd")
     public String findPwd(Member member, Model model) {
-        Member memberPwd = memberService.findMemberPwd(member.getUsername(), member.getPhone());
+        Member memberPwd = memberService.findMemberPwd(member.getUsername(), member.getEmail());
         log.info("비밀번호 찾기: " + memberPwd);
 
         if(memberPwd == null) {
@@ -141,6 +141,6 @@ public class MemberController {
             model.addAttribute("find", 1);
             model.addAttribute("member", memberPwd);
         }
-        return "sign/findIdAndPwd";
+        return "sign/findPwd";
     }
 }
