@@ -40,9 +40,9 @@
                   <th>작성일</th>
                 </tr>
                 </thead>
-                <tr th:each="board:${boardList}">
+                <tr th:each="board, state :${boardList}">
                   <td class="remove-pr">
-                    <p th:text="${board.boardSeq}" th:align="center"/>
+                    <p th:text="${state.count}" th:align="center"/>
                   </td>
                   <td class="price-pr">
                     <a th:href="@{/board(boardSeq=${board.boardSeq})}" th:text="${board.title}"/>
@@ -55,10 +55,31 @@
                   </td>
                 </tr>
               </table>
+            </div><br><br>
+            <div th:if="${!boardList.isEmpty()}">
+              <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!boardList.hasPrevious()} ? 'disabled'">
+                  <a class="page-link" th:href="@{|?page=${boardList.number-1}|}">
+                    <span>이전</span>
+                  </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, boardList.getTotalPages()-1)}"
+                    th:if="${page >= boardList.number-5 and page <= boardList.number+5}"
+                    th:classappend="${page == boardList.number} ? 'active'"
+                    class="page-item">
+                  <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${!boardList.hasNext()} ? 'disabled'">
+                  <a class="page-link" th:href="@{|?page=${boardList.number+1}|}">
+                    <span>다음</span>
+                  </a>
+                </li>
+              </ul>
+              <br><br>
             </div>
           </div>
         </div>
-
         <div class="row my-5">
           <div class="col-lg-6 col-sm-6">
             <div class="coupon-box">

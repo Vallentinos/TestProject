@@ -12,9 +12,9 @@ public interface BoardService {
 
     void updateBoard(Board board); // 수정
 
-    void deleteBoard(Board board); // 삭제
+    void deleteBoard(long boardSeq); // 삭제
 
     Board getBoard(Board board);
 
-    Page<Board> getBoardList(Search search);
+    Page<Board> getBoardList(int page, Search search);
 }

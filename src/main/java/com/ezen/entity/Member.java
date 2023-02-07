@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ToString(exclude="foodList")
+@ToString(exclude={"foodList","boardList"})
 @Getter
 @Setter
 @Valid	// 유효성 검사
@@ -20,17 +20,13 @@ import java.util.List;
 @Entity
 public class Member {
 	@Id
-	@NotBlank(message = "아이디를 입력해 주세요.")
 	@Pattern(regexp = "^[a-zA-z0-9].{5,20}$",
 			message = "영문 대소문자, 숫자포함하여 5자리 이상 입력해 주세요.")
 	private String username;
 
-	@NotBlank(message = "비밀번호를 입력해 주세요.")
 	@Pattern(regexp = "^[a-zA-z0-9].{8,20}$",
 			message = "영문 대소문자, 숫자포함하여 8자리 이상 입력해 주세요.")
 	private String password;
-
-	@NotBlank(message = "이름을 입력해 주세요.")
 	private String name;
 	private String phone;
 

@@ -25,12 +25,11 @@ public class BoardRepositoryTest {
 
 			Board board = new Board();
 
-			board.setTitle("게시글 테스트 테스트" + i);
+			board.setTitle("게시글 테스트😀" + i);
 			board.setWriter("user2");
 			board.setContent("게시글 내용........" + i);
 			board.setRegdate(new Date());
 			boardRepository.save(board);
 		}
 	}
-
 }

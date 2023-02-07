@@ -5,7 +5,6 @@ import com.ezen.entity.QBoard;
 import com.ezen.entity.Search;
 import com.ezen.persistence.BoardRepository;
 import com.querydsl.core.BooleanBuilder;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 @Service
 @Log4j2
@@ -38,9 +36,9 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void deleteBoard(Board board) {
+    public void deleteBoard(long boardSeq) {
 
-        boardRepository.deleteById(board.getBoardSeq());
+        boardRepository.deleteById(boardSeq);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Page<Board> getBoardList(Search search) {
+    public Page<Board> getBoardList(int page, Search search) {
         BooleanBuilder builder = new BooleanBuilder();
 
         QBoard qBoard = QBoard.board;
@@ -60,8 +58,7 @@ public class BoardServiceImpl implements BoardService{
         } else if (search.getSearchCondition().equals("CONTENT")) {
             builder.and(qBoard.content.like("%" + search.getSearchKeyword() + "%"));
         }
-
-        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "boardSeq");
+        Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "boardSeq");
         return boardRepository.findAll(builder, pageable);
     }
 }

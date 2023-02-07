@@ -17,6 +17,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -85,6 +87,10 @@ public class MemberController {
             FieldError fieldError = new FieldError("member", "passwordCheck", "비밀번호가 일치하지 않습니다.");
             result.addError(fieldError);
         }
+        if(!member.getAgree().equals("y")) {
+            FieldError fieldError = new FieldError("member", "agree", "약관에 동의하셔야 가입이 가능합니다.");
+            result.addError(fieldError);
+        }
         if(result.hasErrors()) {
             log.info("회원가입 오류: " + result);
             return "sign/join";
@@ -99,7 +105,18 @@ public class MemberController {
 
     @GetMapping("/member")
     public String getMember(Member member, Model model) {
-        model.addAttribute("member", memberService.getMember(member));
+        Map<String, String> addrMap = new HashMap<>();
+        String[] addressArr = null;
+
+        Member member1 = memberService.getMember(member);
+        addressArr = member1.getAddress().split(",");
+
+        addrMap.put("addr1", addressArr[0]);
+        addrMap.put("addr2", addressArr[1]);
+        addrMap.put("addr3", addressArr[2]);
+
+        model.addAttribute("member", member1);
+        model.addAttribute("address", addrMap);
 
         return "sign/getMember";
     }
@@ -143,4 +160,5 @@ public class MemberController {
         }
         return "sign/findPwd";
     }
+
 }
