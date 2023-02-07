@@ -54,8 +54,8 @@ public class Member {
 
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
 	private List<Food> foodList = new ArrayList<Food>();
-//	@OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
-//	private List<Board> boardList = new ArrayList<Board>();
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Board> boardList = new ArrayList<Board>();
 
 	public Member() {
 
