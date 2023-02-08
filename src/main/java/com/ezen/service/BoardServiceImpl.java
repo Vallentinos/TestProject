@@ -59,6 +59,12 @@ public class BoardServiceImpl implements BoardService{
             builder.and(qBoard.content.like("%" + search.getSearchKeyword() + "%"));
         }
         Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "boardSeq");
+
         return boardRepository.findAll(builder, pageable);
+    }
+
+    @Override
+    public Page<Board> findBoardByCategory(int page, int category, Search search) {
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import com.ezen.entity.Board;
 import com.ezen.entity.Member;
 import com.ezen.entity.Search;
 import com.ezen.service.BoardService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static com.ezen.entity.QBoard.board;
+import java.net.http.HttpRequest;
 
 @Controller
 @Log4j2
@@ -64,7 +65,8 @@ public class BoardController {
     }
 
     @RequestMapping("/boardList")
-    public String getBoardList(@RequestParam(value = "page", defaultValue = "0") int page, Search search, Model model) {
+    public String getNoticeList(@RequestParam(value = "page", defaultValue = "0") int page, Search search, Model model,
+                                HttpServletRequest request) {
         if(search.getSearchCondition() == null) {
             search.setSearchCondition("TITLE");
         }

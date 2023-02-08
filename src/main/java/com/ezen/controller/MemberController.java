@@ -121,10 +121,33 @@ public class MemberController {
         return "sign/getMember";
     }
 
-    @PostMapping("/member")
-    public String updateMember(Member member, Model model) {
-        model.addAttribute("member", memberRepository.save(member));
+    @GetMapping("/updateMember")
+    public String updateMemberForm(Member member, Model model) {
+        Map<String, String> addrMap = new HashMap<>();
+        String[] addressArr = null;
 
+        Member member1 = memberService.getMember(member);
+        addressArr = member1.getAddress().split(",");
+
+        addrMap.put("addr1", addressArr[0]);
+        addrMap.put("addr2", addressArr[1]);
+        addrMap.put("addr3", addressArr[2]);
+
+        model.addAttribute("member", member1);
+        model.addAttribute("address", addrMap);
+
+        return "sign/updateMember";
+    }
+
+    @PostMapping("/updateMember")
+    public String updateMember(@Valid @ModelAttribute("member") Member member, Model model
+                               ,BindingResult result) {
+
+        if(!member.getPassword().equals(member.getPasswordCheck())) {
+            FieldError fieldError = new FieldError("member", "passwordCheck", "비밀번호가 일치하지 않습니다.");
+            result.addError(fieldError);
+        }
+        model.addAttribute("member", memberRepository.save(member));
         return "redirect:/member";
     }
 

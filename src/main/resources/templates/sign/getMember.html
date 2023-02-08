@@ -25,7 +25,7 @@
     <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5">
             <div class="login-wrap p-4 p-md-5">
-                  <form class="login-form" method="post" th:action="@{/updateMember}">
+                  <form class="login-form">
                       <div class="form-group">
                           <br>
                           아이디 <input  type="text" class="form-control rounded-left" id="username" name="username" th:value="${member.username}" readonly>
@@ -44,7 +44,7 @@
                             <br><br>
                           <div class="form-group d-flex align-items-center">
                               <div class="w-100 d-flex justify-content-end">
-                                  <button type="submit" class="btn btn-primary rounded submit">수정</button>&nbsp;&nbsp;
+                                  <button type="button" class="btn btn-primary rounded submit" th:onclick="|location.href='@{/updateMember(username=${member.username})}'|">수정</button>&nbsp;&nbsp;
                                   <button type="button" class="btn btn-primary rounded submit" th:onclick="|location.href='@{/home}'|">취소</button>
                               </div>
                           </div>

@@ -19,6 +19,9 @@ public class Board {
 //	private String writer;
 	private String content;
 
+	@Column(columnDefinition = "char default '0'")
+	private String category; // 1: 공지사항, 2: 자유게시판
+
 	@Column(insertable=false, updatable=false, columnDefinition="date default sysdate")
 	private Date regdate;
 

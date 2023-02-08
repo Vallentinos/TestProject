@@ -3,6 +3,7 @@ package com.ezen.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.ezen.entity.Board;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +30,15 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void updateMember(Member member) {
+		Member findMember = memberRepository.findById(member.getUsername()).get();
 
+		findMember.setPassword(member.getPassword());
+		findMember.setPhone(member.getPhone());
+		findMember.setEmail(member.getEmail());
+		findMember.setZip_num(member.getZip_num());
+		findMember.setAddress(member.getAddress());
+
+		memberRepository.save(member);
 	}
 
 	@Override
