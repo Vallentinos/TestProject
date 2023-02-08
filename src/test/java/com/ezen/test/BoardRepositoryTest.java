@@ -28,8 +28,9 @@ public class BoardRepositoryTest {
 			Member member = new Member();
 			member.setUsername("member12");
 
-			board.setTitle("게시글 테스트😀" + i);
+			board.setTitle("게시글 테스트😐" + i);
 			board.setMember(member);
+			board.setCategory("2");
 			board.setContent("게시글 내용........" + i);
 			board.setRegdate(new Date());
 			boardRepository.save(board);
