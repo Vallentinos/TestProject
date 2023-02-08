@@ -36,9 +36,9 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void deleteBoard(long boardSeq) {
+    public void deleteBoard(Board board) {
 
-        boardRepository.deleteById(boardSeq);
+        boardRepository.deleteById(board.getBoardSeq());
     }
 
     @Override

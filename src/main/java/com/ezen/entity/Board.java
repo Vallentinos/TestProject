@@ -16,20 +16,20 @@ public class Board {
 	private Long boardSeq;
 
 	private String title;
-	private String writer;
+//	private String writer;
 	private String content;
 
 	@Column(insertable=false, updatable=false, columnDefinition="date default sysdate")
 	private Date regdate;
 
-//	@ManyToOne
-//	@JoinColumn(name="username", nullable=false, updatable=false)
-//	private Member member;
+	@ManyToOne
+	@JoinColumn(name="username", nullable=false, updatable=false)
+	private Member member;
 
-//	public void setMember(Member member) {
-//		this.member = member;
-//		member.getBoardList().add(this);
-//	}
+	public void setMember(Member member) {
+		this.member = member;
+		member.getBoardList().add(this);
+	}
 
 	public Board() {
 

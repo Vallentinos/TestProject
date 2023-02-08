@@ -40,15 +40,15 @@
                   <th>작성일</th>
                 </tr>
                 </thead>
-                <tr th:each="board, state :${boardList}">
+                <tr th:each="board:${boardList}">
                   <td class="remove-pr">
-                    <p th:text="${state.count}" th:align="center"/>
+                    <p th:text="${board.boardSeq}" th:align="center"/>
                   </td>
                   <td class="price-pr">
                     <a th:href="@{/board(boardSeq=${board.boardSeq})}" th:text="${board.title}"/>
                   </td>
                   <td class="total-pr">
-                    <p th:text="${board.writer}" th:align="center"/>
+                    <p th:text="${board.member?.username}" th:align="center"/>
                   </td>
                   <td class="name-pr">
                     <p th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}" th:align="center"/>

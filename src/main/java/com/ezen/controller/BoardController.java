@@ -26,6 +26,7 @@ public class BoardController {
 //    }
     @GetMapping("/board")
     public String getBoard(Board board, Model model) {
+        log.info("게시글 조회" + board);
         model.addAttribute("board", boardService.getBoard(board));
         return "board/getBoard";
     }
@@ -37,22 +38,28 @@ public class BoardController {
     }
 
     @PostMapping("/insertBoard")
-    public String insertBoard(Board board, Model model) {
-        model.addAttribute("board", board);
+    public String insertBoard(Board board, @SessionAttribute("member") Member member) {
+        board.setMember(member);
         boardService.insertBoard(board);
         return "redirect:/boardList";
+    }
+
+    @GetMapping("/updateBoard")
+    public String updateBoardForm(Board board, Model model) {
+        model.addAttribute("board", boardService.getBoard(board));
+        return "board/updateBoard";
     }
 
     @PostMapping("/updateBoard")
     public String updateBoard(Board board, Model model) {
         boardService.updateBoard(board);
-        return "redirect:/board";
+        return "redirect:/boardList";
     }
 
     @GetMapping("/deleteBoard")
     public String deleteBoard(Board board) {
         log.info(board.getBoardSeq() + "번째 게시글 삭제");
-        boardService.deleteBoard(board.getBoardSeq());
+        boardService.deleteBoard(board);
         return "redirect:/boardList";
     }
 
