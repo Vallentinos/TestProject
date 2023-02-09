@@ -1,7 +1,6 @@
 package com.ezen.entity;
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
 import lombok.*;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -12,22 +11,10 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-=======
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.util.Date;
-
-@ToString
-@Getter
-@Setter
->>>>>>> d93dc0c (게시판 댓글 엔티티추가)
 @Entity
 public class BoardReply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
     private Long boardReplySeq;
     private String content;
 
@@ -36,11 +23,6 @@ public class BoardReply {
 
     @LastModifiedDate
     private Date updateDate;
-=======
-    private Long BoardReplySeq;
-    private String content;
-    private Date regdate;
->>>>>>> d93dc0c (게시판 댓글 엔티티추가)
 
     @ManyToOne
     @JoinColumn(name="username", nullable=false, updatable=false)
