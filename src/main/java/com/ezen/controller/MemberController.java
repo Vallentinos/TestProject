@@ -184,4 +184,9 @@ public class MemberController {
         return "sign/findPwd";
     }
 
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "sign/mypage";
+    }
+
 }

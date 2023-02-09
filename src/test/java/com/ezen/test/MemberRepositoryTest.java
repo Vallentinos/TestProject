@@ -27,27 +27,19 @@ public class MemberRepositoryTest {
     public void saveMember() {
 
         Member member = new Member();
-            member.setUsername("admin");
-            member.setPassword("admin");
-            member.setName("관리자");
-            member.setRole(Role.valueOf("ADMIN"));
+            member.setUsername("test");
+            member.setPassword("test");
+            member.setName("테스트멤버");
+            member.setAddress("서울시 관악구 신림동");
+            member.setEmail("test@email.com");
+            member.setPhone("010-1234-5678");
+            member.setZip_num("00123");
+            member.setAgree("y");
+            member.setDegree(Degree.valueOf("SILVER"));
+            member.setRole(Role.valueOf("MEMBER"));
             member.setRegdate(new Date());
 
-        Member member1 = new Member();
-            member1.setUsername("test");
-            member1.setPassword("test");
-            member1.setName("테스트멤버");
-            member1.setAddress("서울시 관악구 신림동");
-            member1.setEmail("test@email.com");
-            member1.setPhone("010-1234-5678");
-            member1.setZip_num("00123");
-            member1.setAgree("y");
-            member1.setDegree(Degree.valueOf("SILVER"));
-            member1.setRole(Role.valueOf("MEMBER"));
-            member1.setRegdate(new Date());
-
         memberRepository.save(member);
-        memberRepository.save(member1);
     }
 
 //    @Test

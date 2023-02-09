@@ -37,23 +37,23 @@
 </head>
 
 <body>
-<form th:action="@{insertFood}" method="post">
+<form th:action="@{/insertFood}" method="post">
 <center>
 <div class="contact_section layout_padding">
       <div class="container">
          <h1 class="contact_taital">식자재 등록</h1>
          <div class="email_text">
             <div class="form-group">
-            <select name="category" id="categorySelect" class="email-bt" onchange="categoryChange(this)">
-            	<option value="1">채소</option>
-            	<option value="2">정육</option>
-            	<option value="3">우유/유제품</option>
-            	<option value="4">수산/건어물</option>
+            <select style="text-align: center" name="category" id="categorySelect" class="email-bt" onchange="categoryChange(this)">
+            	<option value="채소" selected>채소</option>
+            	<option value="정육">정육</option>
+            	<option value="유제품">유제품</option>
+            	<option value="수산">수산</option>
             </select>
             </div>
             <br>
             <div class="form-group">
-            <select name="name" id="nameSelect" class="email-bt">
+            <select style="text-align: center" name="name" id="nameSelect" class="email-bt">
             	<option value="감자">감자</option>
             	<option value="고구마">고구마</option>
             	<option value="콩나물">콩나물</option>
@@ -82,32 +82,47 @@
             	<option value="조개류">조개류</option>
             	<option value="새우">새우</option>
             	<option value="해조류">해조류</option>
-            	<option value="기타건어물">기타건어물</option>
             </select>
             </div>
             <div class="form-group">
-               <input type="date" class="email-bt" name="exp">
+               <input style="text-align: center" type="date" class="email-bt" name="exp">
             </div>
             <div class="send_btn"><a><button type="submit">등록</button></a></div>
-            <div class="send_btn"><a th:href="@{foodList}">취소</a></div>
+            <div class="send_btn"><a th:href="@{/foodList}">취소</a></div>
          </div>
       </div>
    </div>
  </center>
 </form>
 <script type="text/javascript">
+	window.onload = function() {
+		var vegetable = ["감자", "고구마", "콩나물", "무", "당근", "버섯", "배추", "시금치", "양파",
+			"파", "마늘", "생강", "고추", "오이", "기타채소"];
+		
+		var target = document.getElementById("nameSelect");
+		
+		target.options.length = 0;
+		
+		for (x in vegetable ) {
+			var opt = document.createElement("option");
+			opt.value = vegetable[x];
+			opt.innerHTML = vegetable[x];
+			target.appendChild(opt);
+		}
+	};
+	
 	function categoryChange(e) {
 		var vegetable = ["감자", "고구마", "콩나물", "무", "당근", "버섯", "배추", "시금치", "양파",
 						"파", "마늘", "생강", "고추", "오이", "기타채소"];
 		var meat = ["돼지", "소", "닭/오리", "기타정육"];
 		var dairyFood = ["우유", "치즈", "버터", "기타유제품"];
-		var seaFood = ["생선", "오징어", "조개류", "새우", "해조류", "기타건어물"];
+		var seaFood = ["생선", "오징어", "조개류", "새우", "해조류"];
 		var target = document.getElementById("nameSelect");
 		
-		if(e.value == "1") var d = vegetable;
-		else if(e.value == "2") var d = meat;
-		else if(e.value == "3") var d = dairyFood;
-		else if(e.value == "4") var d = seaFood;
+		if(e.value == "채소") var d = vegetable;
+		else if(e.value == "정육") var d = meat;
+		else if(e.value == "유제품") var d = dairyFood;
+		else if(e.value == "수산") var d = seaFood;
 		
 		target.options.length = 0;
 		

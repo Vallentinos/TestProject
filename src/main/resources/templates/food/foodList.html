@@ -1,10 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+
 <head>
    <!-- basic -->
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +15,6 @@
    <meta name="keywords" content="">
    <meta name="description" content="">
    <meta name="author" content="">
-   <th:block layout:fragment="css">
    <!-- bootstrap css -->
    <link rel="stylesheet" type="text/css" href="/food/css/bootstrap.min.css">
    <!-- style css -->
@@ -45,7 +42,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -56,26 +53,24 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/foodList/css/style.css" rel="stylesheet"><!-- Favicon  -->
     <link rel="icon" href="/foodCategory/img/core-img/favicon.ico">
-   </th:block>
 </head>
 
 <body>
-<th:block layout:fragment="content">
-<form th:action="@{insertFood}" method="post">
-<div style="text-align: center;">
-    <div class="contact_section layout_padding" style="background-color: white">
-    <div class="container">
+
+<center>
+<div class="contact_section layout_padding">
+      <div class="container">
          <h1 class="contact_taital">식자재 목록</h1>
-     <div style="text-align: left; display: inline-block;"><a th:href="@{../food/foodList}">전체</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <a th:href="@{../food/foodList}">야채</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <a th:href="@{../food/foodList}">정육</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <a th:href="@{../food/foodList}">우유/유제품</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <a th:href="@{../food/foodList}">수산/건어물</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <div style="text-align: left; display: inline-block;"><a th:href="@{/foodList}">전체</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{/getFoodByCategory(category=채소)}">채소</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{/getFoodByCategory(category=정육)}">정육</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{/getFoodByCategory(category=유제품)}">유제품</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <a th:href="@{/getFoodByCategory(category=수산)}">수산</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      
-     <a th:href="@{../food/foodList}">유통기한 : 오래된순</a> / <a th:href="@{../food/foodList}">최신순</a>
-      
+     <a th:href="@{/getFoodDESC}">유통기한 : 최신순</a> / <a th:href="@{/getFoodASC}">오래된순</a> 
      </div>
      <hr>
+     <!-- 
      <table border="1" style="width:700; display: inline-block;">
 		<tr>
 			<td align="right">
@@ -89,6 +84,7 @@
 			</td>
 		</tr>
 	</table>
+	-->
 
     <div class="email_text">
             <div class="container-fluid pt-5">
@@ -104,30 +100,23 @@
                         </tr>
                     </thead>
                     <tbody class="align-middle">
-                        <tr>
-                            <td class="align-middle"><a th:href="@{updateFood}">야채</a></td>
-                            <td class="align-middle">감자</td>
-                            <td class="align-middle">2023-03-07</td>
-                            <td class="align-middle"><a th:href="@{../recipe/recipeList}"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></a></td>
+                        <tr th:each="food, state : ${foodList}">
+                            <td class="align-middle"><a th:text="${food.category}"></a></td>
+                            <td class="align-middle"><a th:href="@{/getFood(food_seq=${food.food_seq})}" th:text="${food.name}"></a></td>
+                            <td class="align-middle" th:text="${#dates.format(food.exp, 'yyyy-MM-dd')}"></td>
+                            <td class="align-middle"><a th:href="@{/deleteFood(food_seq=${food.food_seq})}"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></a></td>
                         </tr>
-                        <tr>
-                            <td class="align-middle">정육</td>
-                            <td class="align-middle">닭</td>
-                            <td class="align-middle">2023-03-07</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                        </tr>
-                    </tbody>
+                        </tbody>
                 </table>
             </div>                      
         </div>
     </div>
-            <div class="send_btn"><a th:href="@{insertFood}">등록</a></div>
+            <div class="send_btn"><a th:href="@{/insertFood}">등록</a></div>
+            <div class="send_btn"><a th:href="@{mypage}">취소</a></div>
          </div>
       </div>
-    </div>
-</div>
+ </center>
 </form>
-    <th:block layout:fragment="script">
   <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -140,7 +129,6 @@
 
     <!-- Template Javascript -->
     <script src="/foodList/js/main.js"></script> <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    </th:block>
-</th:block>
 </body>
+
 </html>

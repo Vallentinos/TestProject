@@ -2,11 +2,29 @@ package com.ezen.persistence;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.ezen.entity.Recipe;
 
-public interface RecipeRepository extends CrudRepository<Recipe, Long> {
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 	
-	//List<Recipe> getRecipeList(Recipe recipe);
+	@Query("SELECT r FROM Recipe r WHERE r.member.username=?1")
+	List<Recipe> getRecipeList(String username);
+	
+	// 카테고리별 나의 레시피 목록 조회
+	@Query("SELECT r FROM Recipe r WHERE r.member.username=?1 AND r.kind=?2")
+	List<Recipe> getRecipeListByKind(String username, String kind);
+	
+	// 카테고리별 전체 레시피 목록 조회
+	@Query("SELECT r FROM Recipe r WHERE r.kind=?1")
+	List<Recipe> getAllRecipeListByKind(String kind);
+	
+	// 최신순 목록 조회
+	@Query("SELECT r FROM Recipe r ORDER BY r.regdate DESC")
+	List<Recipe> getRecipeListDESC(Recipe recipe);
+	
+	// 인기순 목록 조회
+	@Query("SELECT r FROM Recipe r ORDER BY r.good DESC")
+	List<Recipe> getRecipeListGood(Recipe recipe);
 }
