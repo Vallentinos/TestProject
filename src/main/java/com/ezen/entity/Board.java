@@ -29,15 +29,15 @@ public class Board {
 
 	@ManyToOne
 	@JoinColumn(name="username", nullable=false, updatable=false)
-	private Member member;
+	private Member member; // 게시글 작성자
 
 	public void setMember(Member member) {
 		this.member = member;
 		member.getBoardList().add(this);
 	}
 
-//	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
-//	private List<Reply> replyList = new ArrayList<Reply>();
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+	private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
 	public Board() {
 

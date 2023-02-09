@@ -60,6 +60,8 @@ public class Member {
 	private List<Recipe> recipeList = new ArrayList<Recipe>();
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피 리플
 	private List<RecipeReply> recipeReplyList = new ArrayList<RecipeReply>();
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY) // 게시판 리플
+	private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
 	public Member() {
 
