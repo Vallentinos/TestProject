@@ -56,6 +56,8 @@ public class Member {
 	private List<Food> foodList = new ArrayList<Food>();
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Board> boardList = new ArrayList<Board>();
+//	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+//	private List<Reply> replyList = new ArrayList<Reply>();
 
 	public Member() {
 
