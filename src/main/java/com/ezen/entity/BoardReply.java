@@ -1,22 +1,28 @@
 package com.ezen.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 
-@ToString
+@ToString(exclude = {"member", "board"})
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class BoardReply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long BoardReplySeq;
+    private Long boardReplySeq;
     private String content;
-    private Date regdate;
+
+    @Column(insertable=false, updatable=false, columnDefinition="date default sysdate")
+    private Date regdate; // 등록일
+
+    @LastModifiedDate
+    private Date updateDate;
 
     @ManyToOne
     @JoinColumn(name="username", nullable=false, updatable=false)
