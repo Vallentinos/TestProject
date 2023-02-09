@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ToString(exclude={"foodList","boardList"})
+@ToString(exclude= {"foodList", "recipeList", "recipeReplyList", "boardList"})
 @Getter
 @Setter
 @Valid	// 유효성 검사
@@ -52,12 +52,14 @@ public class Member {
 	@Transient // 특정 필드를 컬럼에 매핑하지 않음 DB에 저장, 조회가 되지 않는다.
 	private String passwordCheck;
 
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 식자재
 	private List<Food> foodList = new ArrayList<Food>();
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY) // 게시판
 	private List<Board> boardList = new ArrayList<Board>();
-//	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-//	private List<Reply> replyList = new ArrayList<Reply>();
+	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피
+	private List<Recipe> recipeList = new ArrayList<Recipe>();
+	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피 리플
+	private List<RecipeReply> recipeReplyList = new ArrayList<RecipeReply>();
 
 	public Member() {
 
