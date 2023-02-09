@@ -1,6 +1,8 @@
 package com.ezen.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +35,9 @@ public class Board {
 		this.member = member;
 		member.getBoardList().add(this);
 	}
+
+//	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+//	private List<Reply> replyList = new ArrayList<Reply>();
 
 	public Board() {
 

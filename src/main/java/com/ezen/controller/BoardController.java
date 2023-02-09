@@ -4,15 +4,12 @@ import com.ezen.entity.Board;
 import com.ezen.entity.Member;
 import com.ezen.entity.Search;
 import com.ezen.service.BoardService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpRequest;
 
 @Controller
 @Log4j2
@@ -52,7 +49,7 @@ public class BoardController {
     }
 
     @PostMapping("/updateBoard")
-    public String updateBoard(Board board, Model model) {
+    public String updateBoard(Board board) {
         boardService.updateBoard(board);
         return "redirect:/boardList";
     }
@@ -64,19 +61,29 @@ public class BoardController {
         return "redirect:/boardList";
     }
 
+//    @RequestMapping("/boardList")
+//    public String getBoardList(@RequestParam(value = "page", defaultValue = "0") int page, Search search, Model model) {
+//        if(search.getSearchCondition() == null) {
+//            search.setSearchCondition("TITLE");
+//        }
+//        if(search.getSearchKeyword() == null) {
+//            search.setSearchKeyword("");
+//        }
+//        Page<Board> boardList = boardService.getBoardList(page, search);
+//        log.info("게시글 목록: " + boardList.getContent());
+//        model.addAttribute("boardList", boardList);
+//
+//        return "board/freeBoardList";
+//    }
+
     @RequestMapping("/boardList")
-    public String getNoticeList(@RequestParam(value = "page", defaultValue = "0") int page, Search search, Model model,
-                                HttpServletRequest request) {
-        if(search.getSearchCondition() == null) {
-            search.setSearchCondition("TITLE");
-        }
-        if(search.getSearchKeyword() == null) {
-            search.setSearchKeyword("");
-        }
-        Page<Board> boardList = boardService.getBoardList(page, search);
+    public String getBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
+                                @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
+
+        Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
         log.info("게시글 목록: " + boardList.getContent());
         model.addAttribute("boardList", boardList);
 
-        return "board/boardList";
+        return "board/freeBoardList";
     }
 }

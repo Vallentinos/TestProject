@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @Log4j2
@@ -64,7 +65,9 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Page<Board> findBoardByCategory(int page, int category, Search search) {
-        return null;
+    public Page<Board> findByCategory(int page, String category) {
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "boardSeq");
+        return boardRepository.findAllByCategory(category, pageable);
     }
 }
