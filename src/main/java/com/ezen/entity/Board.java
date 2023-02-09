@@ -10,7 +10,6 @@ import lombok.*;
 @ToString(exclude = "member")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Board {
@@ -30,14 +29,18 @@ public class Board {
 
 	@ManyToOne
 	@JoinColumn(name="username", nullable=false, updatable=false)
-	private Member member; // 게시글 작성자
+	private Member member;
 
 	public void setMember(Member member) {
 		this.member = member;
 		member.getBoardList().add(this);
 	}
 
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
+//	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+//	private List<Reply> replyList = new ArrayList<Reply>();
+
+	public Board() {
+
+	}
 
 }
