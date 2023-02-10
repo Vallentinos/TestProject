@@ -10,6 +10,7 @@ import lombok.*;
 @ToString(exclude = "member")
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Board {
@@ -36,11 +37,7 @@ public class Board {
 		member.getBoardList().add(this);
 	}
 
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
-
-	public Board() {
-
-	}
 
 }

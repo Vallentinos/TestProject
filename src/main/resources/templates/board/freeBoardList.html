@@ -56,6 +56,7 @@
                 </tr>
               </table>
             </div><br><br>
+              <!-- 페이징 처리 -->
             <div th:if="${!boardList.isEmpty()}">
               <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${!boardList.hasPrevious()} ? 'disabled'">
@@ -79,6 +80,7 @@
               </ul>
               <br><br>
             </div>
+              <!-- 페이징 처리 -->
           </div>
         </div>
         <div class="row my-5">

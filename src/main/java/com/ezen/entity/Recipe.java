@@ -23,7 +23,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude={"member", "recipeReplyList"})
+@ToString(exclude={"member", "recipeReplyList", "heartList"})
 @Entity
 public class Recipe {
 	@Id
@@ -60,6 +60,8 @@ public class Recipe {
 	@OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("reply_seq asc") // 댓글 정렬
 	private List<RecipeReply> recipeReplyList = new ArrayList<RecipeReply>();
-	
+
+	@OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	private List<Heart> heartList = new ArrayList<Heart>();
 	
 }
