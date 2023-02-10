@@ -1,7 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/default}">
+<!-- Basic -->
 
 <head>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -12,6 +14,7 @@
     <!-- <link rel="manifest" href="site.webmanifest"> -->
     <!-- Place favicon.ico in the root directory -->
 
+  <th:block layout:fragment="css">
     <!-- CSS here -->
     <link rel="stylesheet" href="/recipe/css/bootstrap.min.css">
     <link rel="stylesheet" href="/recipe/css/owl.carousel.min.css">
@@ -26,10 +29,12 @@
     <link rel="stylesheet" href="/recipe/css/slicknav.css">
     <link rel="stylesheet" href="/recipe/css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    </th:block>
     
 </head>
 
 <body>
+    <th:block layout:fragment="content">
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -63,7 +68,11 @@
     </div>
     <!-- /recepie_area_start  -->
 
-    <!-- JS here -->
+   
+   </th:block>
+</body>
+ <!-- JS here -->
+     <th:block layout:fragment="script">
     <script src="/recipe/js/vendor/modernizr-3.5.0.min.js"></script>
     <script src="/recipe/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="/recipe/js/popper.min.js"></script>
@@ -91,7 +100,4 @@
     <script src="/recipe/js/mail-script.js"></script>
 
     <script src="/recipe/js/main.js"></script>
-    
-</body>
-
 </html>

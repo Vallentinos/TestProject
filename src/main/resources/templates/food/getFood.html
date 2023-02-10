@@ -1,7 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <head>
    <!-- basic -->
@@ -15,6 +18,7 @@
    <meta name="keywords" content="">
    <meta name="description" content="">
    <meta name="author" content="">
+   <th:block layout:fragment="css">
    <!-- bootstrap css -->
    <link rel="stylesheet" type="text/css" href="/food/css/bootstrap.min.css">
    <!-- style css -->
@@ -34,12 +38,14 @@
    <link rel="stylesheet" href="/food/css/owl.theme.default.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
       media="screen">
+      </th:block>
 </head>
 
 <body>
+<th:block layout:fragment="content">
 <form th:action="@{/updateFood(food_seq=${food.food_seq})}" method="post">
 <center>
-<div class="contact_section layout_padding">
+<div class="contact_section layout_padding" style="background-color: white">
       <div class="container">
          <h1 class="contact_taital">식자재 수정</h1>
          <div class="email_text">
@@ -262,6 +268,10 @@
    </div>
  </center>
 </form>
+</th:block>
+
+</body>
+ <th:block layout:fragment="script">
 <script type="text/javascript">
 
 	function categoryChange(e) {
@@ -287,6 +297,5 @@
 		}
 	}
 </script>
-</body>
-
+</th:block>
 </html>

@@ -33,7 +33,7 @@
     SKELETON
 -------------------------------------------------------------------*/
  body {
-     color: #666666;
+     color: black;
      font-size: 15px;
      font-family: 'Dosis', sans-serif;
      line-height: 1.80857;
@@ -2038,7 +2038,7 @@
      padding: 70px 0px;
 }
  .table-main table thead{
-     background: #b0b435;
+     background: black;
      color: #ffffff;
 }
  .table-main .table thead th{
@@ -2189,9 +2189,10 @@
 }
  .new-account-login h5 {
      font-size: 18px;
-     color: #1111111;
+     color: #111111;
      font-weight: 600;
-}
+ }
+
  .new-account-login h5 a:hover{
      color: #b0b435;
 }
