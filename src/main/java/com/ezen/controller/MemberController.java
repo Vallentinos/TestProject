@@ -59,9 +59,17 @@ public class MemberController {
         }
     }
 
+    /*
     @GetMapping("/logout")
     public String logout(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
+        return "redirect:/home";
+    }
+    */
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/home";
     }
 

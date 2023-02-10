@@ -129,6 +129,25 @@ public class RecipeController {
 		} else {
 			// 저장 경로 지정
 	    	String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image";
+	    	
+	    	// 식별자, 랜덤으로 이름 생성
+	    	UUID uuid = UUID.randomUUID();
+	    	
+	    	// 랜덤식별자_원본파일이름 = 저장될 파일이름 지정
+	    	String fileName = uuid + "_" + file.getOriginalFilename();
+	    	
+	    	// 이름 name, projectPath 경로에 저장
+	    	File saveFile = new File(projectPath, fileName);
+	    	
+	    	file.transferTo(saveFile);
+	    	
+	    	// DB에 파일 넣기
+	    	recipe.setFilename(fileName);
+	    	// 저장 경로
+	    	recipe.setFilepath("/files/" + fileName);
+	    	
+	    	// 파일 저장
+	    	recipe.setMember(loginMember);
 	    	recipeService.insertRecipe(recipe);
 	    	return "redirect:myRecipeList";
 		}
