@@ -118,7 +118,7 @@ public class FoodController {
 		} else {
 			food.setMember(loginMember);
 			List<Food> foodList = foodService.getFoodListUsernameAndCategory(food.getMember().getUsername(), food.getCategory());
-			model.addAttribute("foodListByCate", foodList);
+			model.addAttribute("foodList", foodList);
 			return "food/getFoodCate";
 		}
 	}
@@ -133,7 +133,7 @@ public class FoodController {
 		} else {
 			food.setMember(loginMember);
 			List<Food> foodList = foodService.getFoodListUsernameOrderByExpDESC(food.getMember().getUsername());
-			model.addAttribute("foodListDESC", foodList);
+			model.addAttribute("foodList", foodList);
 			return "food/getFoodDESC";
 		}
 	}
@@ -148,7 +148,7 @@ public class FoodController {
 		} else {
 			food.setMember(loginMember);
 			List<Food> foodList = foodService.getFoodListUsernameOrderByExpASC(food.getMember().getUsername());
-			model.addAttribute("foodListASC", foodList);
+			model.addAttribute("foodList", foodList);
 			return "food/getFoodASC";
 		}
 	}

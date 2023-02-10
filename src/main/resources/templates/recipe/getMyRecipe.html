@@ -1,7 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <head>
     <meta name="description" content="Foodeiblog Template">
@@ -16,15 +19,18 @@
     <link href="https://fonts.googleapis.com/css?family=Unna:400,700&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
+    <th:block layout:fragment="css">
     <link rel="stylesheet" href="/getRecipe/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/getRecipe/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/getRecipe/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="/getRecipe/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/getRecipe/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/getRecipe/css/style.css" type="text/css">
+    </th:block>
 </head>
 
 <body>
+<th:block layout:fragment="content">
     <!-- Single Post Section Begin -->
     <section class="single-post spad">
         <center><div class="single-post__hero set-bg" ><img th:src="@{/image/}+ ${recipe.filename}"></div></center>
@@ -103,12 +109,14 @@
             </div>
         </div>
     </section>
-    <!-- Js Plugins -->
+    </th:block>
+</body>
+ <th:block layout:fragment="script">
+<!-- Js Plugins -->
     <script src="/getRecipe/js/jquery-3.3.1.min.js"></script>
     <script src="/getRecipe/js/bootstrap.min.js"></script>
     <script src="/getRecipe/js/jquery.slicknav.js"></script>
     <script src="/getRecipe/js/owl.carousel.min.js"></script>
     <script src="/getRecipe/js/main.js"></script>
-</body>
-
+    </th:block>
 </html>
