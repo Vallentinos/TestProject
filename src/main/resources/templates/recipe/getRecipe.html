@@ -32,9 +32,9 @@
  <th:block layout:fragment="content">
     <!-- Single Post Section Begin -->
     <section class="single-post spad">
-        <input th:type="hidden" id="recipe_seq" name="recipe_seq" th:value="${recipe.recipe_seq}">
-        <input th:type="hidden" id="username" name="username" th:value="${recipe.member.username}">
-        <input th:type="hidden" id="heart" name="heart" th:value="${heart}">
+<!--        <input th:type="hidden" id="recipe_seq" name="recipe_seq" th:value="${recipe.recipe_seq}">-->
+<!--        <input th:type="hidden" id="username" name="username" th:value="${recipe.member.username}">-->
+<!--        <input th:type="hidden" id="heart" name="heart" th:value="${heart}">-->
         <center><div class="single-post__hero set-bg" style="height: 500px;"><img th:src="@{/image/}+ ${recipe.filename}"></div></center>
         <div class="container">
             <div class="row d-flex justify-content-center">
@@ -134,11 +134,10 @@
     <script src="/getRecipe/js/jquery.slicknav.js"></script>
     <script src="/getRecipe/js/owl.carousel.min.js"></script>
     <script src="/getRecipe/js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script type="text/javascript">
         // 좋아요 기능 추가
         $(document).ready(function () {
-            let heart = document.getElementById('heart').value()
+            let heart = $("#heart").val();
             const recipe_seq = $("#recipe_seq").val();
             const username = $("#username").val();
             console.log(username);
@@ -163,7 +162,7 @@
                 });
             } else {
                 // 좋아요
-                $('#insertHeart').click(function () {
+                $('#insertHeart').on('click', function () {
                     $.ajax({
                         url: '/heart',
                         type: 'POST',
