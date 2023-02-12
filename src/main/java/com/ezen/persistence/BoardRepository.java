@@ -15,7 +15,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, QuerydslPre
     @Query("select b from Board b")
     Page<Board> getBoardList(Pageable pageable);
 
-//    @Query("select b from Board b where b.category=:category")
     Page<Board> findAllByCategory(String category, Pageable pageable);
 
 }
