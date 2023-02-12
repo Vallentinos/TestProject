@@ -62,32 +62,36 @@
                     <button class="btn hvr-hover" type="button" th:onclick="|location.href='@{/updateBoard(boardSeq=${board.boardSeq})}'|">수정</button>
                     <button class="btn hvr-hover" type="button" th:onclick="|location.href='@{/boardList}'|">취소</button>
                   </div>
-                  <!-- 댓글 창 -->
-                  <div class="row my-5">
-                    <div class="card card-outline-secondary my-4">
-                      <div class="card-header">
-                        <h4>Board Reply</h4>
-                      </div>
-                      <div class="card-body">
-                        <div class="media mb-3">
-                          <div class="media-body">
-                            <p>{reply.content}</p>
-                            <small class="text-muted">{member.member}</small>
-                          </div>
-                        </div>
-                        <hr>
-                        <div class="media mb-3">
-                          <div class="media-body">
-                            <textarea rows="5" cols="100" placeholder="댓글을 입력해 주세요."></textarea>
-                          </div>
-                        </div>
-                        <button class="btn hvr-hover" type="button">댓글작성</button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 댓글 창 -->
                 </div>
               </div>
+            </form>
+            <!-- 댓글 창 -->
+            <form id="replyForm">
+              <input id="boardSeq" name="boardSeq" type="hidden" th:value="${board.boardSeq}"/>
+              <input id="replyUsername" name="username" type="hidden" th:value="${board.member.username}"/>
+              <div class="row my-5">
+                <div class="card card-outline-secondary my-4">
+                  <div class="card-header">
+                    <h4>Board Reply</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="media mb-3">
+                      <div class="media-body">
+                        <p>{{board.content}}</p>
+                        <small class="text-muted">{{board.member.username}}</small>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="media mb-3">
+                      <div class="media-body">
+                        <textarea id="replyContent" rows="5" cols="90" placeholder="댓글을 입력해 주세요."></textarea>
+                      </div>
+                    </div>
+                    <button class="btn hvr-hover" id="btn-insert-reply" type="button">댓글작성</button>
+                  </div>
+                </div>
+              </div>
+              <!-- 댓글 창 -->
             </form>
           </div>
         </div>
@@ -96,4 +100,73 @@
   <!-- End Cart -->
 </th:block>
 </body>
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      getReplyList();
+    });
+
+    function getReplyList() { // 댓글 리스트
+      const data = {
+        boardSeq: $('boardSeq').val(),
+        username: $('#member').val(),
+        replyContent: $('#replyContent').val()
+      }
+      $.ajax({
+        type: 'get',
+        url: '/getBoardReply',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/jason; charset=utf-8',
+        success: function (data) {
+          var html ='';
+
+          $.each(data, function (key, value) {
+            html +='<div>';
+            html +='<div id=\"'
+
+          })
+        },
+        error: function () {
+          alert("등록된 댓글이 존재하지 않습니다.");
+        }
+      });
+    }
+
+
+    const main = {
+      init : function () {
+        const _this = this;
+
+        $('#btn-insert-reply').on('click', function () {
+            _this.insertReply();
+        });
+      },
+
+      insertReply : function () { // 댓글 등록
+        const data = { // 변수 선언
+          // username: $("#replyUsername").val(),
+          // content: $("#replyContent").val(),
+          // boardSeq: $("#boardSeq").val()
+          content: $("#replyContent").val(),
+        }
+        const boardSeq = $('#boardSeq').val();
+        console.log(data);
+        console.log(boardSeq);
+        $.ajax({
+          type: 'post',
+          url: '/insertBoardReply',
+          dataType: 'json',
+          data: JSON.stringify(data),
+          contentType: 'application/json; charset=urf-8',
+        }).done(function () {
+          alert('댓글이 등록되었습니다.');
+          window.location.reload();
+        }).fail(function (error) {
+          alert(JSON.stringify(error));
+        });
+      },
+    }
+    main.init();
+  </script>
 </html>

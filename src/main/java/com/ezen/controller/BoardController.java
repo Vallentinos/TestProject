@@ -1,6 +1,7 @@
 package com.ezen.controller;
 
 import com.ezen.entity.Board;
+import com.ezen.entity.BoardReply;
 import com.ezen.entity.Member;
 import com.ezen.entity.Search;
 import com.ezen.service.BoardService;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -25,6 +28,12 @@ public class BoardController {
     @GetMapping("/board")
     public String getBoard(Board board, Model model) {
         log.info("게시글 조회" + board);
+        List<BoardReply> boardReplyList = board.getBoardReplyList();
+
+        if(boardReplyList != null && !boardReplyList.isEmpty()) {
+            model.addAttribute("boardReplyList", boardReplyList);
+        }
+
         model.addAttribute("board", boardService.getBoard(board));
         return "board/getBoard";
     }
