@@ -16,22 +16,19 @@ public class HeartServiceImpl implements HeartService{
 
     @Autowired
     private HeartRepository heartRepository;
-    @Autowired
-    private RecipeRepository recipeRepository;
 
     @Transactional
     @Override
     public int insertHeart(Heart heart) {
         Optional<Heart> findHeart = heartRepository.getHeart(
                 heart.getRecipe().getRecipe_seq(), heart.getMember().getUsername());
-//        int good = findHeart.get().getRecipe().getGood()+1;
         log.info("insertHeart()", heart);
 
         if (findHeart.isEmpty()) {
             heartRepository.save(heart); // 좋아요가 없으면 저장
             return 1;
         } else {
-            heartRepository.deleteById(findHeart.get().getHeartSeq());
+            heartRepository.deleteById(findHeart.get().getHeartSeq()); // 좋아요가 있으면 삭제
             return 0;
         }
     }
