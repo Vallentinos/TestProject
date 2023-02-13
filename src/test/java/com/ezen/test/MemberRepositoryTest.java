@@ -26,24 +26,24 @@ public class MemberRepositoryTest {
     @Test
     public void saveMember() {
 
-        Member member = new Member();
-            member.setUsername("admin123");
-            member.setPassword("admin123123");
-            member.setName("관리자");
-            member.setAddress("서울시 관악구 신림동, 201호, (신림동)");
-            member.setEmail("admin123@email.com");
-            member.setPhone("010-0000-0000");
-            member.setZip_num("00000");
-            member.setAgree("y");
-            member.setDegree(Degree.valueOf("GOLD"));
-            member.setRole(Role.valueOf("ADMIN"));
-            member.setRegdate(new Date());
-
-        memberRepository.save(member);
+//        Member member = new Member();
+//            member.setUsername("admin123");
+//            member.setPassword("admin123123");
+//            member.setName("관리자");
+//            member.setAddress("서울시 관악구 신림동, 201호, (신림동)");
+//            member.setEmail("admin123@email.com");
+//            member.setPhone("010-0000-0000");
+//            member.setZip_num("00000");
+//            member.setAgree("y");
+//            member.setDegree(Degree.valueOf("GOLD"));
+//            member.setRole(Role.valueOf("ADMIN"));
+//            member.setRegdate(new Date());
+//
+//        memberRepository.save(member);
 
             Member member1 = new Member();
-            member1.setUsername("member12");
-            member1.setPassword("member1212");
+            member1.setUsername("member11");
+            member1.setPassword("member1111");
             member1.setName("테스트멤버");
             member1.setAddress("서울시 관악구 신림동, 201호, (신림동)");
             member1.setEmail("test@email.com");
