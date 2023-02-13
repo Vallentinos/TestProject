@@ -4,6 +4,7 @@ import com.ezen.entity.Board;
 import com.ezen.entity.BoardReply;
 import com.ezen.persistence.BoardReplyRepository;
 import com.ezen.persistence.BoardRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ public class BoardReplyServiceImpl implements BoardReplyService{
 
     @Override
     public void insertBoardReply(BoardReply boardReply) {
-        boardRepository.findById(boardReply.getBoardReplySeq()).get();
         boardReplyRepository.save(boardReply);
     }
 
@@ -35,8 +35,8 @@ public class BoardReplyServiceImpl implements BoardReplyService{
     }
 
     @Override
-    public List<BoardReply> getBoardReplyList(BoardReply boardReply) {
+    public List<BoardReply> getBoardReplyList(Board board) {
         
-        return boardReplyRepository.findAllByBoard_BoardSeq(boardReply.getBoard().getBoardSeq());
+        return boardReplyRepository.findAllByBoard_BoardSeq(board.getBoardSeq());
     }
 }

@@ -4,6 +4,7 @@ import com.ezen.entity.Board;
 import com.ezen.entity.BoardReply;
 import com.ezen.entity.Member;
 import com.ezen.entity.Search;
+import com.ezen.service.BoardReplyService;
 import com.ezen.service.BoardService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class BoardController {
 
     @Autowired
     BoardService boardService;
+    @Autowired
+    BoardReplyService boardReplyService;
 
 //    @GetMapping("/boardList")
 //    public String boardList() {
@@ -28,7 +31,7 @@ public class BoardController {
     @GetMapping("/board")
     public String getBoard(Board board, Model model) {
         log.info("게시글 조회" + board);
-        List<BoardReply> boardReplyList = board.getBoardReplyList();
+        List<BoardReply> boardReplyList =boardReplyService.getBoardReplyList(board);
 
         if(boardReplyList != null && !boardReplyList.isEmpty()) {
             model.addAttribute("boardReplyList", boardReplyList);
