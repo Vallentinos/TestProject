@@ -85,8 +85,8 @@ public class BoardController {
 //        return "board/freeBoardList";
 //    }
 
-    @RequestMapping("/boardList")
-    public String getBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
+    @RequestMapping("/freeBoardList")
+    public String getFreeBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
                                 @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
 
         Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
@@ -94,5 +94,16 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
 
         return "board/freeBoardList";
+    }
+
+    @RequestMapping("/noticeBoardList")
+    public String getNoticeBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
+                               @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
+
+        Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
+        log.info("게시글 목록: " + boardList.getContent());
+        model.addAttribute("boardList", boardList);
+
+        return "board/noticeBoardList";
     }
 }

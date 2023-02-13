@@ -41,13 +41,3 @@ public class HeartController {
         return heart_val;
     }
 }
-
-//    @PostMapping("/heart")
-//    public ResponseEntity<String> insertHeart(Heart heart,
-//            @SessionAttribute("member") Member member,
-//            @RequestParam("recipe_seq") Long recipe_seq) {
-//
-//        log.info(heart);
-//        heartService.insertHeart(heart);
-//    }
-//}

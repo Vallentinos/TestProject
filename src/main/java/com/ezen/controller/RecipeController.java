@@ -73,13 +73,13 @@ public class RecipeController {
 		Recipe rp = recipeService.getRecipe(recipe);
 		recipeReply.setRecipe(rp);
 		List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
-		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 추천수
+		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 레시피 추천수
 		model.addAttribute("recipe", rp);
 		model.addAttribute("recipeReply", rrp);
 
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
-		if(loginMember != null) { // 로그인한 유저가 있으면 좋아요 가져오기
+		if(loginMember != null) { // 로그인한 멤버가 있으면 해당 멤버의 좋아요 가져오기
 			heart.setRecipe(rp);
 			heart.setMember(loginMember);
 			model.addAttribute("heart", heartService.getHeart(heart));
