@@ -2,9 +2,11 @@ package com.ezen.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.ezen.entity.Heart;
+import com.ezen.persistence.HeartRepository;
 import com.ezen.service.HeartService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class RecipeController {
 	private RecipeReplyService recipeReplyService;
 	@Autowired
 	private HeartService heartService;
+	@Autowired
+	private HeartRepository heartRepository;
 	
 	@GetMapping("/recipeList")
 	public String recipeList(Recipe recipe, Model model) {
@@ -69,16 +73,16 @@ public class RecipeController {
 		Recipe rp = recipeService.getRecipe(recipe);
 		recipeReply.setRecipe(rp);
 		List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
+		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 추천수
 		model.addAttribute("recipe", rp);
 		model.addAttribute("recipeReply", rrp);
 
-		Member loginMember = (Member)session.getAttribute("loginMember");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 
-		if(loginMember != null) {
+		if(loginMember != null) { // 로그인한 유저가 있으면 좋아요 가져오기
 			heart.setRecipe(rp);
 			heart.setMember(loginMember);
 			model.addAttribute("heart", heartService.getHeart(heart));
-			log.info(heart);
 		}
 		return "recipe/getRecipe";
 		
