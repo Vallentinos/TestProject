@@ -22,7 +22,7 @@ public class HeartController {
 
     @PostMapping("/heart")
     @ResponseBody
-    public int insertHeart(@RequestBody Map<String, String> map, Model model) {
+    public int insertHeart(@RequestBody Map<String, String> map) {
         System.out.println("사용자명: "+map.get("username"));
         System.out.println("레시피 Seq: " + map.get("recipe_seq"));
 

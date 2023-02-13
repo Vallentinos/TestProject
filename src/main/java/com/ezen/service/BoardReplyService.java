@@ -13,5 +13,5 @@ public interface BoardReplyService {
 
     void deleteBoardReply(BoardReply boardReply); // 댓글 삭제
 
-    List<BoardReply> getBoardReplyList(BoardReply boardReply);
+    List<BoardReply> getBoardReplyList(Board board);
 }
