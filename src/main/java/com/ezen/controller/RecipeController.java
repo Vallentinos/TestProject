@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import com.ezen.persistence.RecipeRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import com.ezen.service.RecipeService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@Log4j2
 public class RecipeController {
 	@Autowired
 	private RecipeService recipeService;
@@ -67,7 +70,7 @@ public class RecipeController {
 		Recipe rp = recipeService.getRecipe(recipe);
 		recipeReply.setRecipe(rp);
 		List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
-//		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 레시피 추천수
+
 		//recipeReplyService.replyCount(recipeReply.getRecipe().getRecipe_seq());
 		model.addAttribute("recipe", rp);
 		model.addAttribute("recipeReply", rrp);
