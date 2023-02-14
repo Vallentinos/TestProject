@@ -23,8 +23,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.log4j.Log4j2;
 
 @Controller
+@Log4j2
 public class FundingController {
 	@Autowired
 	private FundingService fundingService;
@@ -160,7 +162,7 @@ public class FundingController {
 			Recipe recipe = new Recipe();
 			recipe.setRecipe_seq(recipe_seq);
 			funding.setRecipe(recipe);
-				
+				log.info("펀딩등록레시피>>>>>>>" + recipe);
 			fundingService.insertFunding(funding);
 			fundingService.updateResult(funding.getRecipe().getRecipe_seq()); // 레시피상태 신청완료로 업데이트
 			return "redirect:myFundingList";

@@ -30,6 +30,7 @@ public class HeartController {
         member.setUsername(map.get("username"));
         Recipe recipe = new Recipe();
         recipe.setRecipe_seq(Long.parseLong(map.get("recipe_seq")));
+        recipe.setGood(Integer.parseInt(map.get("good")));
 
         Heart heart = new Heart();
         heart.setMember(member);

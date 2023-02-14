@@ -67,7 +67,7 @@ public class RecipeController {
 		Recipe rp = recipeService.getRecipe(recipe);
 		recipeReply.setRecipe(rp);
 		List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
-		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 레시피 추천수
+//		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 레시피 추천수
 		//recipeReplyService.replyCount(recipeReply.getRecipe().getRecipe_seq());
 		model.addAttribute("recipe", rp);
 		model.addAttribute("recipeReply", rrp);

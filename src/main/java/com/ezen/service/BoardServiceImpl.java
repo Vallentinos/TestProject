@@ -67,7 +67,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public Page<Board> findByCategory(int page, String category) {
 
-        Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "boardSeq");
+        Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "boardSeq");
         return boardRepository.findAllByCategory(category, pageable);
     }
 }

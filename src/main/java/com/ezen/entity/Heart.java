@@ -31,5 +31,4 @@ public class Heart {
         this.recipe = recipe;
         recipe.getHeartList().add(this);
     }
-
 }
