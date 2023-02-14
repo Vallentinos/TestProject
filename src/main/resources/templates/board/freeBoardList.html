@@ -13,13 +13,20 @@
     <div class="all-title-box">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-12" th:if="${category.equals(2)}">
             <h2>자유게시판</h2>
             <ul class="breadcrumb">
               <li class="breadcrumb-item"><a href="home">Home</a></li>
               <li class="breadcrumb-item active">Free</li>
             </ul>
           </div>
+            <div class="col-lg-12" th:if="${category.equals(1)}">
+                <h2>공지사항</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home">Home</a></li>
+                    <li class="breadcrumb-item active">Free</li>
+                </ul>
+            </div>
         </div>
       </div>
     </div>
@@ -69,7 +76,7 @@
                     th:classappend="${page == boardList.number} ? 'active'"
                     class="page-item">
 <!--                  <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>-->
-                  <a th:text="${page}" class="page-link" th:href="@{boardList(category=${param.category}, page=${page})}"></a>
+                  <a th:text="${page}" class="page-link" th:href="@{freeBoardList(category=${param.category}, page=${page})}"></a>
                 </li>
 
                 <li class="page-item" th:classappend="${!boardList.hasNext()} ? 'disabled'">
