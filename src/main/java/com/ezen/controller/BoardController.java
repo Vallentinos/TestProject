@@ -3,7 +3,6 @@ package com.ezen.controller;
 import com.ezen.entity.Board;
 import com.ezen.entity.BoardReply;
 import com.ezen.entity.Member;
-import com.ezen.entity.Search;
 import com.ezen.service.BoardReplyService;
 import com.ezen.service.BoardService;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.ezen.entity.Role.ADMIN;
 
 @Controller
 @Log4j2
@@ -49,9 +50,18 @@ public class BoardController {
 
     @PostMapping("/insertBoard")
     public String insertBoard(Board board, @SessionAttribute("member") Member member) {
+        log.info(board);
         board.setMember(member);
-        boardService.insertBoard(board);
-        return "redirect:/boardList";
+
+        if(member.getRole() == ADMIN) {
+            board.setCategory("1");
+            boardService.insertBoard(board);
+            return "redirect:/boardList?category=1";
+        } else {
+            board.setCategory("2");
+            boardService.insertBoard(board);
+            return "redirect:/boardList?category=2";
+        }
     }
 
     @GetMapping("/updateBoard")
@@ -62,15 +72,29 @@ public class BoardController {
 
     @PostMapping("/updateBoard")
     public String updateBoard(Board board) {
-        boardService.updateBoard(board);
-        return "redirect:/boardList";
+
+        if(board.getCategory().equals(1)) {
+            boardService.updateBoard(board);
+            return "redirect:/boardList?category=1";
+        } else {
+            board.setCategory("2");
+            boardService.updateBoard(board);
+            return "redirect:/boardList?category=2";
+        }
     }
 
     @GetMapping("/deleteBoard")
     public String deleteBoard(Board board) {
         log.info(board.getBoardSeq() + "번째 게시글 삭제");
-        boardService.deleteBoard(board);
-        return "redirect:/boardList";
+        log.info(board.getCategory());
+
+        if(board.getCategory().equals(1)) {
+            boardService.deleteBoard(board);
+            return "redirect:/boardList?category=1";
+        } else {
+            boardService.deleteBoard(board);
+            return "redirect:/boardList?category=2";
+        }
     }
 
 //    @RequestMapping("/boardList")
@@ -88,25 +112,15 @@ public class BoardController {
 //        return "board/freeBoardList";
 //    }
 
-    @RequestMapping("/freeBoardList")
+    @RequestMapping("/boardList")
     public String getFreeBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
                                 @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
 
         Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
         log.info("게시글 목록: " + boardList.getContent());
         model.addAttribute("boardList", boardList);
+        model.addAttribute("category", category);
 
         return "board/freeBoardList";
-    }
-
-    @RequestMapping("/noticeBoardList")
-    public String getNoticeBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
-                               @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
-
-        Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
-        log.info("게시글 목록: " + boardList.getContent());
-        model.addAttribute("boardList", boardList);
-
-        return "board/noticeBoardList";
     }
 }
