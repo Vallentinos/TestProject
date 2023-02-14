@@ -9,6 +9,7 @@ public interface RecipeService {
 	
 	void updateRecipe(Recipe recipe);
 
+	// 추천수 추가/삭제
 	void updateGood(Recipe recipe);
 	
 	void deleteRecipe(Recipe recipe);

@@ -44,7 +44,7 @@ public class Recipe {
 	@Column(insertable=false, updatable=false)
 	@ColumnDefault("2")
 	private String result; // 펀딩 신청 여부 1. 신청 2. 신청전
-	@Column(insertable=false, updatable=false, columnDefinition = "number default 0")
+	@Column(columnDefinition = "number default 0")
 	private int good; // 추천수
 	@Column(insertable=false, updatable=false, columnDefinition = "date default sysdate")
 	private Date regdate;

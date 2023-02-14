@@ -37,4 +37,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 	@Modifying
 	@Query(value="SELECT * FROM (SELECT * FROM recipe ORDER BY good DESC) WHERE ROWNUM <4", nativeQuery = true)
 	List<Recipe> getBestRecipeList(Recipe recipe);
+
 }

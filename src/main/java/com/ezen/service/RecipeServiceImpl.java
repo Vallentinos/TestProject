@@ -2,6 +2,7 @@ package com.ezen.service;
 
 import java.util.List;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import com.ezen.entity.Recipe;
 import com.ezen.persistence.RecipeRepository;
 
 @Service
+@Log4j2
 public class RecipeServiceImpl implements RecipeService {
 
 	@Autowired
@@ -28,6 +30,7 @@ public class RecipeServiceImpl implements RecipeService {
 		findRecipe.setIngredient(recipe.getIngredient());
 		findRecipe.setCooking_time(recipe.getCooking_time());
 		findRecipe.setAmount(recipe.getAmount());
+		findRecipe.setGood(recipe.getGood());
 		findRecipe.setDegree(recipe.getDegree());
 		findRecipe.setProcedure(recipe.getProcedure());
 		findRecipe.setFilename(recipe.getFilename());

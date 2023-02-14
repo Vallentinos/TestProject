@@ -1,6 +1,7 @@
 package com.ezen.service;
 
 import com.ezen.entity.Heart;
+import com.ezen.entity.Recipe;
 
 public interface HeartService {
 

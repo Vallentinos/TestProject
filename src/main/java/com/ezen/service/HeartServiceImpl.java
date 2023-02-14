@@ -28,11 +28,17 @@ public class HeartServiceImpl implements HeartService{
         log.info("insertHeart()", heart);
 
         if (findHeart.isEmpty()) {
-            heart.getRecipe().setGood(+1);
+            int goodHeart = heart.getRecipe().getGood()+1; // 추천수 +1
+            heart.getRecipe().setGood(goodHeart);
+            recipeService.updateGood(heart.getRecipe());
+
             heartRepository.save(heart); // 좋아요가 없으면 저장
             return 1;
         } else {
-            findHeart.get().getRecipe().setGood(-1);
+            int goodHeart = findHeart.get().getRecipe().getGood()-1; // 추천수 -1
+            findHeart.get().getRecipe().setGood(goodHeart);
+            recipeService.updateGood(findHeart.get().getRecipe());
+
             heartRepository.deleteById(findHeart.get().getHeartSeq()); // 좋아요가 있으면 삭제
             return 0;
         }
