@@ -3,7 +3,6 @@ package com.ezen.entity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -11,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ToString(exclude= {"foodList", "recipeList", "recipeReplyList", "boardList", "boardReplyList", "heartList"})
+@ToString(exclude= {"foodList", "recipeList", "recipeReplyList", "boardList", "fundingList", "boardReplyList", "heartList"})
 @Getter
 @Setter
 @Valid	// 유효성 검사
-@NoArgsConstructor // 기본 생성자
+@NoArgsConstructor
 @AllArgsConstructor // 생성자 자동 생성
 @Entity
 public class Member {
@@ -54,20 +53,22 @@ public class Member {
 
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 식자재
 	private List<Food> foodList = new ArrayList<Food>();
-
+	
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY) // 게시판
 	private List<Board> boardList = new ArrayList<Board>();
-
+	
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피
 	private List<Recipe> recipeList = new ArrayList<Recipe>();
-
-	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피 리플
+	
+	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피 댓글
 	private List<RecipeReply> recipeReplyList = new ArrayList<RecipeReply>();
-
+	
+	@OneToMany(mappedBy = "member", fetch=FetchType.EAGER) // 펀딩
+	private List<Funding> fundingList = new ArrayList<Funding>();
+	
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY) // 게시판 리플
 	private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.EAGER) // 좋아요
 	private List<Heart> heartList = new ArrayList<Heart>();
-
 }

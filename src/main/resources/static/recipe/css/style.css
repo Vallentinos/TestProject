@@ -697,11 +697,11 @@ h3 {
 .line_btn {
   display: inline-block;
   font-size: 20px;
-  color: #000000;
-  border: 1px solid #ffc000;
+  color: #b0b435;
+  border: 1px solid black;
   text-transform: capitalize;
   padding: 13px 34px;
-  font-weight: 500;
+  font-weight: 700;
   font-family: "Roboto", sans-serif;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -4163,7 +4163,7 @@ h3 {
 
 /* line 3, ../../Arafath/CL/CL October/220 Tasty Recipes/HTML/scss/_recepie.scss */
 .recepie_area {
-  padding-top: 200px;
+  padding-top: 20px;
   padding-bottom: 50px;
 }
 
@@ -4178,7 +4178,6 @@ h3 {
 @media (min-width: 768px) and (max-width: 991px) {
   /* line 3, ../../Arafath/CL/CL October/220 Tasty Recipes/HTML/scss/_recepie.scss */
   .recepie_area {
-    padding-top: 100px;
     padding-bottom: 50px;
   }
 }
@@ -4316,11 +4315,11 @@ h3 {
 
 /* line 79, ../../Arafath/CL/CL October/220 Tasty Recipes/HTML/scss/_recepie.scss */
 .recepie_area .single_recepie h3 {
-  font-size: 30px;
-  color: #000;
+  font-size: 28px;
+  color: black;
   margin-top: 38px;
-  margin-bottom: 20px;
   display: inline-block;
+  font-weight: 1000;
 }
 
 /* line 85, ../../Arafath/CL/CL October/220 Tasty Recipes/HTML/scss/_recepie.scss */
@@ -4335,12 +4334,11 @@ h3 {
 
 /* line 92, ../../Arafath/CL/CL October/220 Tasty Recipes/HTML/scss/_recepie.scss */
 .recepie_area .single_recepie p {
-  font-size: 20px;
-  color: #777777;
+  font-size: 18px;
+  color: black;
   font-weight: 400;
   display: inline-block;
-  margin-bottom: 0;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 /* line 104, ../../Arafath/CL/CL October/220 Tasty Recipes/HTML/scss/_recepie.scss */

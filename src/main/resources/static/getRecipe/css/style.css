@@ -184,7 +184,7 @@ ol {
 	text-transform: uppercase;
 	display: inline-block;
 	padding: 13px 26px 12px;
-	background: oldlace;
+	background: #b0b435;
 	border: none;
 }
 
@@ -2220,6 +2220,8 @@ ol {
 	text-transform: uppercase;
 	position: relative;
 	z-index: 1;
+	font-size: 20px;
+	font-weight: 500;
 }
 
 .widget__title h4:after {

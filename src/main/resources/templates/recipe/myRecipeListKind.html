@@ -55,14 +55,14 @@
                   <td class="remove-pr">
                     <a th:href="@{/getMyRecipe(recipe_seq=${recipe.recipe_seq})}" th:text="${recipe.recipe_name}"></a>
                   </td>
-                  <td class="total-pr">
+                  <td class="remove-pr">
                     <p th:text="${#dates.format(recipe.regdate, 'yyyy-MM-dd')}" th:align="center"/>
                   </td>
-                  <td class="total-pr">
+                  <td class="remove-pr">
                     <p th:text="${recipe.good}" th:align="center"/>
                   </td>
                   <th:block th:if="${recipe.good} >= 200 and ${recipe.result} == 2">
-                            	<td class="align-middle"><a th:href="@{/insertFunding}" th:text="신청가능"></a></td>
+                            	<td class="remove-pr"><a th:href="@{/insertFunding}"><button class="btn btn-theme" type="button" th:text="신청"></button></a></td>
                             </th:block>
                              <th:block th:if="${recipe.good} >= 200 and ${recipe.result} == 1">
                             	<td class="align-middle"><a th:text="신청완료"></a></td>

@@ -3,9 +3,12 @@ package com.ezen.persistence;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.ezen.entity.Recipe;
+
+import jakarta.transaction.Transactional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 	
@@ -27,4 +30,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 	// 인기순 목록 조회
 	@Query("SELECT r FROM Recipe r ORDER BY r.good DESC")
 	List<Recipe> getRecipeListGood(Recipe recipe);
+	
+	// 추천수 높은 상품 3개
+	// SELECT * FROM (SELECT * FROM recipe ORDER BY good DESC) WHERE ROWNUM <4;
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM (SELECT * FROM recipe ORDER BY good DESC) WHERE ROWNUM <4", nativeQuery = true)
+	List<Recipe> getBestRecipeList(Recipe recipe);
 }

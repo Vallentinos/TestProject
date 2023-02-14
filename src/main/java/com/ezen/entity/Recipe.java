@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.OrderBy;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,14 +24,14 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(exclude={"member", "recipeReplyList", "heartList"})
+@ToString(exclude={"member", "recipeReplyList", "funding", "heartList"})
 @Entity
 public class Recipe {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long recipe_seq;
 	
-	private String kind; // 종류
+	private String kind; // 한식, 양식, 디저트
 	private String recipe_name; // 레시피명
 	private String content; // 레시피 설명
 	private String ingredient; // 재료
@@ -42,7 +43,7 @@ public class Recipe {
 	private String filepath; // 파일경로
 	@Column(insertable=false, updatable=false)
 	@ColumnDefault("2")
-	private String result; // 펀딩 신청 여부1. 신청 2. 신청전
+	private String result; // 펀딩 신청 여부 1. 신청 2. 신청전
 	@Column(insertable=false, updatable=false, columnDefinition = "number default 0")
 	private int good; // 추천수
 	@Column(insertable=false, updatable=false, columnDefinition = "date default sysdate")
@@ -60,8 +61,14 @@ public class Recipe {
 	@OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@OrderBy("reply_seq asc") // 댓글 정렬
 	private List<RecipeReply> recipeReplyList = new ArrayList<RecipeReply>();
+	
+	@OneToOne(mappedBy="recipe")
+	private Funding funding;
+	
+	public void setFunding(Funding funding) {
+		this.funding = funding;
+	}
 
 	@OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Heart> heartList = new ArrayList<Heart>();
-	
 }

@@ -56,19 +56,19 @@
                             <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="about.html">소개</a></li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">레시피</a>
+                                <a th:href="@{/recipeList}" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">레시피</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="shop.html">한식</a></li>
-                                    <li><a href="shop-detail.html">양식</a></li>
-                                    <li><a href="cart.html">디저트</a></li>
+                                    <li><a th:href="@{/recipeListKind(kind=한식)}">한식</a></li>
+                                    <li><a th:href="@{/recipeListKind(kind=양식)}">양식</a></li>
+                                    <li><a th:href="@{/recipeListKind(kind=디저트)}">디저트</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">밀키트</a>
+                                <a th:href="@{/fundingList}" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">밀키트</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="shop.html">한식</a></li>
-                                    <li><a href="shop-detail.html">양식</a></li>
-                                    <li><a href="cart.html">디저트</a></li>
+                                    <li><a th:href="@{/fundingListKind(kind=한식)}">한식</a></li>
+                                    <li><a th:href="@{/fundingListKind(kind=한식)}">양식</a></li>
+                                    <li><a th:href="@{/fundingListKind(kind=한식)}">디저트</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -83,16 +83,16 @@
                     <!-- /.navbar-collapse -->
 
                     <!-- Start Atribute Navigation -->
-                    <div class="attr-nav">
-                        <ul>
-                            <a th:if="${session.loginMember == null}" href="/login">login</a>&nbsp;&nbsp;
-                            <a th:if="${session.loginMember == null}" href="/join">join</a>
-                            <a th:if="${session.loginMember != null}" href="/logout">logout</a>&nbsp;&nbsp;
+                   <div class="attr-nav">
+                    <ul>
+                        <a th:if="${session.loginMember == null}" href="/login">login</a>&nbsp;&nbsp;
+                        <a th:if="${session.loginMember == null}" href="/join">join</a>
+                        <a th:if="${session.loginMember != null}" href="/logout">logout</a>&nbsp;&nbsp;
                             <span th:if="${session.loginMember != null}">
-                                <a href="/mypage">myPage</a>
+                              <a href="/mypage">myPage</a> 
                             </span>
-                        </ul>
-                    </div>
+                    </ul>
+                </div>
                     <!-- End Atribute Navigation -->
                 </div>
             </nav>

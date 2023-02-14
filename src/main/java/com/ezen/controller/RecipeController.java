@@ -2,32 +2,27 @@ package com.ezen.controller;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import com.ezen.entity.Heart;
-import com.ezen.persistence.HeartRepository;
-import com.ezen.service.HeartService;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ezen.entity.Heart;
 import com.ezen.entity.Member;
 import com.ezen.entity.Recipe;
 import com.ezen.entity.RecipeReply;
+import com.ezen.persistence.HeartRepository;
+import com.ezen.service.HeartService;
 import com.ezen.service.RecipeReplyService;
 import com.ezen.service.RecipeService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@Log4j2
 public class RecipeController {
 	@Autowired
 	private RecipeService recipeService;
@@ -68,15 +63,15 @@ public class RecipeController {
 	
 	
 	@GetMapping("/getRecipe")
-	public String getRecipe(Recipe recipe, Model model, RecipeReply recipeReply,
-							 Heart heart, HttpSession session) {
+	public String getRecipe(Recipe recipe, Model model, RecipeReply recipeReply, Heart heart, HttpSession session) {
 		Recipe rp = recipeService.getRecipe(recipe);
 		recipeReply.setRecipe(rp);
 		List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
 		rp.setGood(heartRepository.totalHeart(rp.getRecipe_seq())); // 레시피 추천수
+		//recipeReplyService.replyCount(recipeReply.getRecipe().getRecipe_seq());
 		model.addAttribute("recipe", rp);
 		model.addAttribute("recipeReply", rrp);
-
+		model.addAttribute("cnt", recipeReplyService.replyCount(recipeReply.getRecipe().getRecipe_seq())); // 댓글 수 표시
 		Member loginMember = (Member) session.getAttribute("loginMember");
 
 		if(loginMember != null) { // 로그인한 멤버가 있으면 해당 멤버의 좋아요 가져오기
@@ -132,6 +127,7 @@ public class RecipeController {
 			List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
 			model.addAttribute("recipe", rp);
 			model.addAttribute("recipeReply", rrp);
+			model.addAttribute("cnt", recipeReplyService.replyCount(recipeReply.getRecipe().getRecipe_seq())); // 댓글 수 표시
 			return "recipe/getMyRecipe";
 		}
 	}

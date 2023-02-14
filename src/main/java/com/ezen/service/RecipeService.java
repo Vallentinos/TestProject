@@ -29,4 +29,6 @@ public interface RecipeService {
 	
 	// 인기순 목록 조회
 	List<Recipe> getRecipeListGood(Recipe recipe);
+	
+	List<Recipe> getBestRecipeList(Recipe recipe);
 }
