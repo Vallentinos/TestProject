@@ -8,6 +8,8 @@ public interface RecipeService {
 	void insertRecipe(Recipe recipe);
 	
 	void updateRecipe(Recipe recipe);
+
+	void updateGood(Recipe recipe);
 	
 	void deleteRecipe(Recipe recipe);
 	

@@ -32,6 +32,7 @@
     <!-- Single Post Section Begin -->
     <section class="single-post spad">
     <input th:type="hidden" id="recipe_seq" name="recipe_seq" th:value="${recipe.recipe_seq}">
+    <input th:type="hidden" id="good" name="good" th:value="${recipe.good}">
         <input th:type="hidden" id="username" name="username" th:if="${session.loginMember != null}" th:value="${session.loginMember.username}">
         <input th:type="hidden" id="heart" name="heart" th:value="${heart}">
         <center><div class="single-post__hero set-bg" style="height: 500px;"><img th:src="@{/image/}+ ${recipe.filename}"></div></center>
@@ -142,6 +143,7 @@
             let heart = $("#heart").val();
             const recipe_seq = $("#recipe_seq").val();
             const username = $("#username").val();
+            const good = $("#good").val();
             var html = "";
 
             console.log(username);
@@ -155,7 +157,8 @@
                         contentType: 'application/json',
                         data: JSON.stringify({
                             'recipe_seq': recipe_seq,
-                            'username': username
+                            'username': username,
+                            'good': good
                         }),
                         success: function (data) {
                             alert('레시피 좋아요 취소');
@@ -177,7 +180,8 @@
                         contentType: 'application/json',
                         data: JSON.stringify({
                             'recipe_seq': recipe_seq,
-                            'username': username
+                            'username': username,
+                            'good': good
                         }),
                         success: function (data) {
                             alert('레시피 좋아요');

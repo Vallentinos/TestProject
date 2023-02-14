@@ -1,11 +1,27 @@
 package com.ezen.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Purchase {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long purchaseSeq;
-    private String comment;
+    
+    private String comment; // 배송요청사항
     private String agree;
     private String payer; // 입금자명
     private Date regdate; // 구매일자

@@ -113,7 +113,7 @@ public class BoardController {
 //    }
 
     @RequestMapping("/boardList")
-    public String getFreeBoardList(@RequestParam(value = "page", defaultValue = "0") int page,
+    public String getFreeBoardList(@RequestParam(value = "page", defaultValue = "1") int page,
                                 @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
 
         Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
