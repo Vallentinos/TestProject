@@ -1,6 +1,5 @@
 package com.ezen.persistence;
 
-import com.ezen.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ezen.entity.Member;

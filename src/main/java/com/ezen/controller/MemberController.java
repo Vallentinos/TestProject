@@ -1,25 +1,34 @@
 package com.ezen.controller;
 
-import com.ezen.entity.Degree;
-import com.ezen.entity.Member;
-import com.ezen.entity.Role;
-import com.ezen.persistence.MemberRepository;
-import com.ezen.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-import lombok.extern.log4j.Log4j2;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.ezen.entity.Degree;
+import com.ezen.entity.Funding;
+import com.ezen.entity.Member;
+import com.ezen.entity.Recipe;
+import com.ezen.entity.Role;
+import com.ezen.persistence.MemberRepository;
+import com.ezen.service.FundingService;
+import com.ezen.service.MemberService;
+import com.ezen.service.RecipeService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j2;
 
 @Controller
 @SessionAttributes("member")
@@ -30,9 +39,19 @@ public class MemberController {
     private MemberService memberService;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private RecipeService recipeService;
+    @Autowired
+    private FundingService fundingService;
 
     @GetMapping("/home")
-    public String home() {
+    public String home(Recipe recipe, Funding funding, Model model) {
+    	// 베스트 펀딩
+    	List<Funding> fundingList = fundingService.getBestFundingList(funding);
+    	model.addAttribute("funding", fundingList);
+    	// 베스트 레시피
+    	List<Recipe> recipeList = recipeService.getBestRecipeList(recipe);
+    	model.addAttribute("recipe", recipeList);
         return "home";
     }
 
@@ -58,14 +77,6 @@ public class MemberController {
             return "redirect:/login";
         }
     }
-
-    /*
-    @GetMapping("/logout")
-    public String logout(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-        return "redirect:/home";
-    }
-    */
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -193,8 +204,14 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String mypage() {
-        return "sign/mypage";
+    public String mypage(HttpSession session, Member member) {
+    	Member loginMember = (Member)session.getAttribute("loginMember");
+    	
+    	if (loginMember == null) {
+    		return "sign/login";
+    	} else {
+    		return "sign/mypage";
+    	}
     }
 
 }

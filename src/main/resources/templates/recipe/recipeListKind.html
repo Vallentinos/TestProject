@@ -58,8 +58,10 @@
                     <div class="single_recepie text-center">
                         <div class="recepie_thumb"><img th:src="@{/image/}+ ${recipe.filename}"></div>
                         <h3 th:text="${recipe.recipe_name}"></h3><br>
-                        <span th:text="${recipe.kind}"></span><br>
-                        <p th:text="${recipe.amount}"></p><p>인분</p><br>
+                         <i class="fa fa-user-o" style="color: #b0b435;"></i>&nbsp;&nbsp;<p th:text="${recipe.amount}"></p><p>인분</p><br>
+                         <i class="fa-solid fa-seedling" style="color: #b0b435;"></i>&nbsp;&nbsp;<p>난이도 :</p>&nbsp;&nbsp;<p th:text="${recipe.degree}"></p><br>
+                        <i class="fa fa-clock-o" style="color: #b0b435;"></i>&nbsp;&nbsp;<p>소요시간 :</p>&nbsp;&nbsp;<p th:text="${recipe.cooking_time}"></p><p>분</p><br>
+                        
                         <a th:href="@{/getRecipe(recipe_seq=${recipe.recipe_seq})}" class="line_btn">보러가기</a>
                     </div>
                 </div>
@@ -100,4 +102,5 @@
     <script src="/recipe/js/mail-script.js"></script>
 
     <script src="/recipe/js/main.js"></script>
+    <script src="https://kit.fontawesome.com/f9c1d37a26.js" crossorigin="anonymous"></script>
 </html>

@@ -8,4 +8,6 @@ public interface RecipeReplyService {
 	void insertRecipeReply(RecipeReply recipeReply);
 	
 	List<RecipeReply> getRecipeReplyList(RecipeReply recipeReply);
+	
+	int replyCount(long recipe_seq);  
 }

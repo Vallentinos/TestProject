@@ -24,4 +24,9 @@ public class RecipeReplyServiceImpl implements RecipeReplyService {
 		return recipeReplyRepo.findRecipeReplyByRecipeSeq(recipeReply.getRecipe().getRecipe_seq());
 	}
 
+	@Override
+	public int replyCount(long recipe_seq) {
+		return recipeReplyRepo.replyCount(recipe_seq);
+	}
+
 }

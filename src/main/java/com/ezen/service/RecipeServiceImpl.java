@@ -76,4 +76,9 @@ public class RecipeServiceImpl implements RecipeService {
 		return recipeRepo.getRecipeListGood(recipe);
 	}
 
+	@Override
+	public List<Recipe> getBestRecipeList(Recipe recipe) {
+		return recipeRepo.getBestRecipeList(recipe);
+	}
+
 }
