@@ -30,7 +30,6 @@ public class RecipeServiceImpl implements RecipeService {
 		findRecipe.setIngredient(recipe.getIngredient());
 		findRecipe.setCooking_time(recipe.getCooking_time());
 		findRecipe.setAmount(recipe.getAmount());
-		findRecipe.setGood(recipe.getGood());
 		findRecipe.setDegree(recipe.getDegree());
 		findRecipe.setProcedure(recipe.getProcedure());
 		findRecipe.setFilename(recipe.getFilename());

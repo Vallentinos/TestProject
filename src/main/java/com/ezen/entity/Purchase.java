@@ -1,16 +1,12 @@
 package com.ezen.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 
+@ToString(exclude={"member", "funding"})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,12 +16,43 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long purchaseSeq;
-    
-    private String comment; // 배송요청사항
-    private String agree;
+
+    private String name;
+    private String phone;
+    private String email;
+    private String zip_num;
+    private String address;
+    private String p_comment; // 배송요청사항
+
+    @Column(columnDefinition = "char default 'n'")
+    private String agree; // 결제동의
+
     private String payer; // 입금자명
-    private Date regdate; // 구매일자
     private int quantity; // 구매수량
     private int result; // 진행상태 -> 1: 배송전, 2: 배송중, 3: 배송완료
     private int price; // 결제금액
+
+    @Column(insertable=false, updatable=false, columnDefinition="date default sysdate")
+    private Date regdate; // 구매일자
+
+    @LastModifiedDate
+    private Date updateDate;
+
+    @ManyToOne
+    @JoinColumn(name="username", nullable=false, updatable=false)
+    private Member member; // 구매자 아이디
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getPurchaseList().add(this);
+    }
+
+    @ManyToOne
+    @JoinColumn(name="funding_seq", nullable=false, updatable=false)
+    private Funding funding; // 구매 펀딩번호
+
+    public void setFunding(Funding funding) {
+        this.funding = funding;
+        funding.getPurchaseList().add(this);
+    }
 }

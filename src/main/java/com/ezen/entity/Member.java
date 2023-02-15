@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ToString(exclude= {"foodList", "recipeList", "recipeReplyList", "boardList", "fundingList", "boardReplyList", "heartList"})
+@ToString(exclude= {"foodList", "recipeList", "recipeReplyList", "boardList", "fundingList", "boardReplyList", "heartList", "purchaseList"})
 @Getter
 @Setter
 @Valid	// 유효성 검사
@@ -47,9 +47,9 @@ public class Member {
 	@Column(insertable=false, updatable=false, columnDefinition="date default sysdate")
 	private Date regdate;
 
-
 	@Transient // 특정 필드를 컬럼에 매핑하지 않음 DB에 저장, 조회가 되지 않는다.
 	private String passwordCheck;
+
 
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 식자재
 	private List<Food> foodList = new ArrayList<Food>();
@@ -71,4 +71,7 @@ public class Member {
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.EAGER) // 좋아요
 	private List<Heart> heartList = new ArrayList<Heart>();
+
+	@OneToMany(mappedBy = "member", fetch = FetchType.EAGER) // 결제
+	private List<Purchase> purchaseList = new ArrayList<Purchase>();
 }
