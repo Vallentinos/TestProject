@@ -42,8 +42,8 @@ public class MemberRepositoryTest {
 //        memberRepository.save(member);
 
             Member member1 = new Member();
-            member1.setUsername("member11");
-            member1.setPassword("member1111");
+            member1.setUsername("member12");
+            member1.setPassword("member1212");
             member1.setName("테스트멤버");
             member1.setAddress("서울시 관악구 신림동, 201호, (신림동)");
             member1.setEmail("test@email.com");

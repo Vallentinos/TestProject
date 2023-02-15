@@ -1,25 +1,17 @@
 package com.ezen.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 @Getter
 @Setter
-@ToString(exclude={"member", "recipe"})
+@ToString(exclude={"member", "recipe", "purchaseList"})
 @Entity
 public class Funding {
 	@Id
@@ -62,5 +54,8 @@ public class Funding {
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
 	}
+
+	@OneToMany(mappedBy = "funding", fetch = FetchType.EAGER) // 결제
+	private List<Purchase> purchaseList = new ArrayList<Purchase>();
 	
 }

@@ -84,8 +84,8 @@
                   </div>
                   </tr>
                   <tr th:if="${boardReplyList == null}">
-                    <p>댓글이 존재하지 않습니다.</p>
-                  </tr><br>
+                    <p>댓글이 존재하지 않습니다.</p><br>
+                  </tr>
                   <!-- 댓글 입력창-->
                   <form class="mb-4">
                     <input th:type="hidden" id="replyUsername" name="username" th:if="${session.loginMember != null}" th:value="${session.loginMember.username}">

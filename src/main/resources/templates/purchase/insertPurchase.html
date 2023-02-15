@@ -9,13 +9,11 @@
 </head>
 <body>
 <th:block layout:fragment="content">
-
-    <!-- Start All Title Box -->
     <div class="all-title-box">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>결제</h2>
+                    <h2>주문/결제</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a th:href="@{/home}">Home</a></li>
                         <li class="breadcrumb-item active">Checkout</li>
@@ -38,58 +36,63 @@
                             <div class="mb-3">
                                 <label for="name">이름 *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="name" placeholder="" required>
+                                    <input type="text" class="form-control" id="name" placeholder="" th:value="${member.name}" required>
                                     <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="email">이메일 *</label>
-                                <input type="email" class="form-control" id="email" placeholder="">
+                                <input type="email" class="form-control" id="email" th:value="${member.email}" placeholder="">
+                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">핸드폰번호 *</label>
+                                <input type="email" class="form-control" id="phone" th:value="${member.phone}" placeholder="">
                                 <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="zip_num">우편번호 *</label>
-                                    <input type="text" class="form-control" id="zip_num" placeholder="" required>
+                                    <input type="text" class="form-control" id="zip_num" th:value="${member.zip_num}" placeholder="" required>
                                     <div class="invalid-feedback"> Zip code required. </div>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="address">주소 *</label>
-                                <input type="text" class="form-control" id="address" placeholder="" required>
+                                <input type="text" class="form-control" id="address" name="address" th:value="${address.addr1}" placeholder="" required>
                                 <div class="invalid-feedback"> Please enter your shipping address. </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="address2">상세주소 *</label>
-                                <input type="text" class="form-control" id="address2" placeholder="">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="address2">상세주소 *</label>
+                                    <input type="text" class="form-control" id="address2" name="address" th:value="${address.addr2}" placeholder="" required>
+                                    <div class="invalid-feedback"> Name on card is required </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="address3"></label>
+                                    <input type="text" class="form-control" id="address3" name="address" th:value="${address.addr3}" placeholder="참고사항">
+                                    <div class="invalid-feedback"> Credit card number is required </div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label for="comment">배송시 요청사항 *</label>
-                                <input type="text" class="form-control" id="comment" placeholder="">
+                                <label for="p_comment">배송시 요청사항</label>
+                                <input type="text" class="form-control" id="p_comment" placeholder="예시) 문 앞에 놓고 가세요.">
                             </div>
                             <hr class="mb-4">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="same-address">
-                                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="save-info">
-                                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                                <label class="custom-control-label" for="same-address">기존 정보 가져오기</label>
                             </div>
                             <hr class="mb-4">
                             <div class="title"> <span>결제수단</span> </div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                    <label class="custom-control-label" for="credit">Credit card</label>
+                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="credit">무통장입금</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="debit">Debit card</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                    <label class="custom-control-label" for="debit">카카오페이</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -102,18 +105,6 @@
                                     <label for="cc-number">Credit card number</label>
                                     <input type="text" class="form-control" id="cc-number" placeholder="" required>
                                     <div class="invalid-feedback"> Credit card number is required </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">Expiration</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                                    <div class="invalid-feedback"> Expiration date required </div>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">CVV</label>
-                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                                    <div class="invalid-feedback"> Security code required </div>
                                 </div>
                             </div>
                             <hr class="mb-1"> </form>
@@ -142,8 +133,8 @@
                                 </div>
                                 <div class="rounded p-2 bg-light">
                                     <div class="media mb-2">
-                                        <div class="media-body"> <a href="detail.html"> Lorem ipsum dolor sit amet</a>
-                                            <div class="small text-muted">Price: $40.00 <span class="mx-2">|</span> Qty: 1 <span class="mx-2">|</span> Subtotal: $40.00</div>
+                                        <div class="media-body"> <a href="detail.html">밀키트이름</a>
+                                            <div class="small text-muted">가격: 00,000 <span class="mx-2">|</span> 수량: 1 <span class="mx-2">|</span> 합계: 00,000</div>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +147,7 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="font-weight-bold">Product</div>
-                                    <div class="ml-auto font-weight-bold">합계</div>
+                                    <div class="ml-auto font-weight-bold">총 합계</div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
@@ -177,7 +168,6 @@
 
         </div>
     </div>
-    <!-- End Cart -->
 </th:block>
 </body>
 </html>
