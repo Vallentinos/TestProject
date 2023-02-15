@@ -3,6 +3,7 @@ package com.ezen.controller;
 import com.ezen.entity.Funding;
 import com.ezen.entity.Member;
 import com.ezen.entity.Purchase;
+import com.ezen.service.FundingService;
 import com.ezen.service.MemberService;
 import com.ezen.service.PurchaseService;
 import lombok.extern.log4j.Log4j2;
@@ -25,12 +26,15 @@ public class PurchaseController {
     private PurchaseService purchaseService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private FundingService fundingService;
 
     @GetMapping("/purchase")
     public String insertPurchaseForm(@SessionAttribute("member") Member member, Funding funding, Model model) {
         Map<String, String> addrMap = new HashMap<>();
         String[] addressArr = null;
 
+        Funding findFunding = fundingService.getFunding(funding);
         Member findMember = memberService.getMember(member);
         addressArr = findMember.getAddress().split(",");
 
@@ -38,11 +42,9 @@ public class PurchaseController {
         addrMap.put("addr2", addressArr[1]);
         addrMap.put("addr3", addressArr[2]);
 
+        model.addAttribute("funding", findFunding);
         model.addAttribute("member", findMember);
         model.addAttribute("address", addrMap);
-        model.addAttribute("funding", funding);
-
-        log.info("밀키트구매 멤버: " + member);
 
         return "purchase/insertPurchase";
     }

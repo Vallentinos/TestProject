@@ -34,10 +34,9 @@
 							<li>
 								<div class="form-group quantity-box">
 									<label class="control-label">수량</label>
-									<input class="form-control" value="0" min="0" max="20" type="number"><br>
-									<a class="btn hvr-hover" data-fancybox-close="" th:href="@{/purchase}">구매하기</a>
+									<input class="form-control" value="0" min="0" max="20" type="number" id="quantity" name="quantity"><br>
+									<a class="btn hvr-hover" data-fancybox-close="" th:href="@{/purchase(funding=${funding.funding_seq})}">구매하기</a>
 									<a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i></a>
-								
 								</div>
 							</li>
 						</ul>

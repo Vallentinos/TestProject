@@ -42,17 +42,8 @@ public class Purchase {
     @JoinColumn(name="username", nullable=false, updatable=false)
     private Member member; // 구매자 아이디
 
-    public void setMember(Member member) {
-        this.member = member;
-        member.getPurchaseList().add(this);
-    }
-
     @ManyToOne
     @JoinColumn(name="funding_seq", nullable=false, updatable=false)
     private Funding funding; // 구매 펀딩번호
 
-    public void setFunding(Funding funding) {
-        this.funding = funding;
-        funding.getPurchaseList().add(this);
-    }
 }

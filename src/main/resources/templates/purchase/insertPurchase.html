@@ -16,7 +16,7 @@
                     <h2>주문/결제</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a th:href="@{/home}">Home</a></li>
-                        <li class="breadcrumb-item active">Checkout</li>
+                        <li class="breadcrumb-item active">Purchase</li>
                     </ul>
                 </div>
             </div>
@@ -33,46 +33,48 @@
                             <h3>주문자 정보</h3>
                         </div>
                         <form class="needs-validation" novalidate>
+                            <div id="infoAddress">
                             <div class="mb-3">
                                 <label for="name">이름 *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="name" placeholder="" th:value="${member.name}" required>
-                                    <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
+                                    <input type="hidden" class="form-control" id="info-name"th:value="${member.name}">
+                                    <input type="text" class="form-control" id="name" required>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="email">이메일 *</label>
-                                <input type="email" class="form-control" id="email" th:value="${member.email}" placeholder="">
-                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                                <input type="hidden" class="form-control" id="info-email" th:value="${member.email}">
+                                <input type="text" class="form-control" id="email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email">핸드폰번호 *</label>
-                                <input type="email" class="form-control" id="phone" th:value="${member.phone}" placeholder="">
-                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                                <input type="hidden" class="form-control" id="info-phone" th:value="${member.phone}">
+                                <input type="text" class="form-control" id="phone" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="zip_num">우편번호 *</label>
-                                    <input type="text" class="form-control" id="zip_num" th:value="${member.zip_num}" placeholder="" required>
-                                    <div class="invalid-feedback"> Zip code required. </div>
+                                    <input type="hidden" class="form-control" id="info-zip_num" th:value="${member.zip_num}">
+                                    <input type="text" class="form-control" id="zip_num" required>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="address">주소 *</label>
-                                <input type="text" class="form-control" id="address" name="address" th:value="${address.addr1}" placeholder="" required>
-                                <div class="invalid-feedback"> Please enter your shipping address. </div>
+                                <input type="hidden" class="form-control" id="info-address" name="address" th:value="${address.addr1}">
+                                <input type="text" class="form-control" id="address" name="address" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="address2">상세주소 *</label>
-                                    <input type="text" class="form-control" id="address2" name="address" th:value="${address.addr2}" placeholder="" required>
-                                    <div class="invalid-feedback"> Name on card is required </div>
+                                    <input type="hidden" class="form-control" id="info-address2" name="address" th:value="${address.addr2}">
+                                    <input type="text" class="form-control" id="address2" name="address" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="address3"></label>
-                                    <input type="text" class="form-control" id="address3" name="address" th:value="${address.addr3}" placeholder="참고사항">
-                                    <div class="invalid-feedback"> Credit card number is required </div>
+                                    <input type="hidden" class="form-control" id="info-address3" name="address" th:value="${address.addr3}">
+                                    <input type="text" class="form-control" id="address3" name="address"placeholder="참고사항">
                                 </div>
+                            </div>
                             </div>
                             <div class="mb-3">
                                 <label for="p_comment">배송시 요청사항</label>
@@ -87,24 +89,18 @@
                             <div class="title"> <span>결제수단</span> </div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="credit">무통장입금</label>
+                                    <input id="kakaopay" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="kakaopay">카카오페이</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="debit">카카오페이</label>
+                                    <input id="deposit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="deposit">무통장입금</label>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" id="inputPayer" style="display:none;">
                                 <div class="col-md-6 mb-3">
                                     <label for="payer">입금자명</label>
-                                    <input type="text" class="form-control" id="payer" placeholder="" required> <small class="text-muted">Full name as displayed on card</small>
-                                    <div class="invalid-feedback"> Name on card is required </div>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="cc-number">Credit card number</label>
-                                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                                    <div class="invalid-feedback"> Credit card number is required </div>
+                                    <input type="text" class="form-control" id="payer" placeholder="" required>
                                 </div>
                             </div>
                             <hr class="mb-1"> </form>
@@ -133,8 +129,8 @@
                                 </div>
                                 <div class="rounded p-2 bg-light">
                                     <div class="media mb-2">
-                                        <div class="media-body"> <a href="detail.html">밀키트이름</a>
-                                            <div class="small text-muted">가격: 00,000 <span class="mx-2">|</span> 수량: 1 <span class="mx-2">|</span> 합계: 00,000</div>
+                                        <div class="media-body"><p th:text="${funding.funding_name}"/></a>
+                                            <div class="small text-muted">가격:&nbsp;<p th:text="${#numbers.formatInteger(funding.price,0,'COMMA')}"/><span class="mx-2">|</span> 수량: 1 <span class="mx-2">|</span> 합계: 00,000</div>
                                         </div>
                                     </div>
                                 </div>
@@ -161,13 +157,98 @@
                                 </div>
                                 <hr> </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"> <a href="checkout.html" class="ml-auto btn hvr-hover">구매</a> </div>
+                        <div class="col-12 d-flex shopping-box"> <a class="ml-auto btn hvr-hover" th:onclick="requestPay()">구매</a> </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </th:block>
 </body>
+<th:block layout:fragment="script">
+<script src="main/js/jquery-3.2.1.min.js"></script>
+<script src="main/js/popper.min.js"></script>
+<script src="main/js/bootstrap.min.js"></script>
+<!-- ALL PLUGINS -->
+<script src="main/js/jquery.superslides.min.js"></script>
+<script src="main/js/bootstrap-select.js"></script>
+<script src="main/js/inewsticker.js"></script>
+<script src="main/js/bootsnav.js."></script>
+<script src="main/js/images-loded.min.js"></script>
+<script src="main/js/isotope.min.js"></script>
+<script src="main/js/owl.carousel.min.js"></script>
+<script src="main/js/baguetteBox.min.js"></script>
+<script src="main/js/form-validator.min.js"></script>
+<script src="main/js/contact-form-script.js"></script>
+<script src="main/js/custom.js"></script>
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+    $(function () { // 기존 멤버 정보 불러오기
+        $('#same-address').on('click', function () {
+            var same = this.checked;
+            $("#name").val(same ? $('#info-name').val():'');
+            $("#phone").val(same ? $('#info-phone').val():'');
+            $("#email").val(same ? $('#info-email').val():'');
+            $("#zip_num").val(same ? $('#info-zip_num').val():'');
+            $("#address").val(same ? $('#info-address').val():'');
+            $("#address2").val(same ? $('#info-address2').val():'');
+            $("#address3").val(same ? $('#info-address3').val():'');
+
+            if(same == true) {
+                $('#infoAddress input').filter('input:text')
+                    // .attr('readonly', true).css('opacity', 0.5);
+            } else {
+                $('#infoAddress input').filter('input:text')
+                    // .attr('readonly', false).css('opacity', 1);
+            }
+        });
+    });
+
+    $(function (){
+        $('input[type="radio"][name="paymentMethod"]').on('click', function(){
+            switch (this.id){
+                case "kakaopay":
+                    $('#inputPayer').hide();
+                    break;
+                case "deposit":
+                    $('#inputPayer').show();
+                    break;
+                default:
+                    break;
+            }
+        });
+    });
+
+    // IMP.init("TC0ONETIME"); // 가맹점 식별코드
+    // function requestPay() {
+    //     IMP.request_pay({
+    //         pg : 'kakaopay',
+    //         pay_method : 'card',
+    //         merchant_uid: "57008833-33004",
+    //         name : '당근 10kg',
+    //         amount : 1004,
+    //         buyer_email : 'Iamport@chai.finance',
+    //         buyer_name : '포트원 기술지원팀',
+    //         buyer_tel : '010-1234-5678',
+    //         buyer_addr : '서울특별시 강남구 삼성동',
+    //         buyer_postcode : '123-456'
+    //     }, function (rsp) { // callback
+    //         if (rsp.success) {
+    //             jQuery.ajax({
+    //                 url: '/purchase',
+    //                 type: 'POST',
+    //                 data: JSON.stringify({
+    //                   // 필요한 데이터가 있으면 추가 전달
+    //                 })
+    //             }).done(function (data) {
+    //
+    //             });
+    //             console.log(rsp);
+    //         } else {
+    //             console.log(rsp);
+    //         }
+    //     });
+    // }
+</script>
+</th:block>
 </html>
