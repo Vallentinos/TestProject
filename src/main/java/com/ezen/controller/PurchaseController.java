@@ -42,8 +42,11 @@ public class PurchaseController {
         addrMap.put("addr2", addressArr[1]);
         addrMap.put("addr3", addressArr[2]);
 
+        int amount = funding.getPrice()*p_quantity;
+
         model.addAttribute("funding", findFunding);
         model.addAttribute("p_quantity", p_quantity);
+        model.addAttribute("amount", amount);
         model.addAttribute("member", findMember);
         model.addAttribute("address", addrMap);
 
