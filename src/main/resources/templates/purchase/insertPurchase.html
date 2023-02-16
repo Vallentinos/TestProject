@@ -32,12 +32,28 @@
                         <div class="title-left">
                             <h3>주문자 정보</h3>
                         </div>
+                            <div class="d-flex">
+                                <h5 th:text="아이디"/>
+                                <h5 class="ml-auto font-weight-bold" th:text="${member.username}"/>
+                            </div>
+                            <div class="d-flex">
+                                <h5 th:text="핸드폰번호"/>
+                                <h5 class="ml-auto font-weight-bold" th:text="${member.phone}"/>
+                            </div>
+                            <div class="d-flex">
+                                <h5 th:text="이메일"/>
+                                <h5 class="ml-auto font-weight-bold" th:text="${member.email}"/>
+                            </div>
+                        <br>
+                        <div class="title-left">
+                            <h3>배송 정보</h3>
+                        </div>
                         <form class="needs-validation" novalidate>
                             <div id="infoAddress">
                             <div class="mb-3">
                                 <label for="name">이름 *</label>
                                 <div class="input-group">
-                                    <input type="hidden" class="form-control" id="info-name"th:value="${member.name}">
+                                    <input type="hidden" class="form-control" id="info-name" th:value="${member.name}">
                                     <input type="text" class="form-control" id="name" required>
                                 </div>
                             </div>
@@ -56,6 +72,7 @@
                                     <label for="zip_num">우편번호 *</label>
                                     <input type="hidden" class="form-control" id="info-zip_num" th:value="${member.zip_num}">
                                     <input type="text" class="form-control" id="zip_num" required>
+                                    <input type="button" class="btn btn-primary rounded submit" onclick="findAddress()" value="우편번호 찾기"><br>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -65,14 +82,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="address2">상세주소 *</label>
+                                    <label for="detailAddress">상세주소 *</label>
                                     <input type="hidden" class="form-control" id="info-address2" name="address" th:value="${address.addr2}">
-                                    <input type="text" class="form-control" id="address2" name="address" required>
+                                    <input type="text" class="form-control" id="detailAddress" name="address" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="address3"></label>
+                                    <label for="extraAddress"></label>
                                     <input type="hidden" class="form-control" id="info-address3" name="address" th:value="${address.addr3}">
-                                    <input type="text" class="form-control" id="address3" name="address"placeholder="참고사항">
+                                    <input type="text" class="form-control" id="extraAddress" name="address"placeholder="참고사항">
                                 </div>
                             </div>
                             </div>
@@ -101,6 +118,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="payer">입금자명</label>
                                     <input type="text" class="form-control" id="payer" placeholder="" required>
+                                    <h5>신한은행&nbsp;&nbsp;110-3456-78900&nbsp;&nbsp;&nbsp;레시푸드</h5>
                                 </div>
                             </div>
                             <hr class="mb-1"> </form>
@@ -130,7 +148,7 @@
                                 <div class="rounded p-2 bg-light">
                                     <div class="media mb-2">
                                         <div class="media-body"><p th:text="${funding.funding_name}"/></a>
-                                            <div class="small text-muted">가격:&nbsp;<p th:text="${#numbers.formatInteger(funding.price,0,'COMMA')}"/><span class="mx-2">|</span> 수량: 1 <span class="mx-2">|</span> 합계: 00,000</div>
+                                            <div class="small text-muted">가격:&nbsp;<p th:text="${#numbers.formatInteger(funding.price,0,'COMMA')}"/><span class="mx-2">|</span> 수량: <p th:text="${p_quantity}"/><span class="mx-2">|</span> 합계: <p th:text="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}"/></div>
                                         </div>
                                     </div>
                                 </div>
@@ -142,22 +160,21 @@
                                     <h3>결제상세</h3>
                                 </div>
                                 <div class="d-flex">
-                                    <div class="font-weight-bold">Product</div>
-                                    <div class="ml-auto font-weight-bold">총 합계</div>
+                                    <div class="ml-auto font-weight-bold">합계</div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
-                                    <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold"> $ 440 </div>
+                                    <h4>전체 상품금액</h4>
+                                    <div class="ml-auto font-weight-bold"> ₩<p th:text="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}"/></div>
                                 </div>
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>총 결제금액</h5>
-                                    <div class="ml-auto h5"> $ 388 </div>
+                                    <div class="ml-auto h5" id="amount"> ₩<p th:text="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}"/></div>
                                 </div>
                                 <hr> </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"> <a class="ml-auto btn hvr-hover" th:onclick="requestPay()">구매</a> </div>
+                        <div class="col-12 d-flex shopping-box"> <a class="ml-auto btn hvr-hover" th:onclick="requestPay()">결제</a> </div>
                     </div>
                 </div>
             </div>
@@ -181,6 +198,7 @@
 <script src="main/js/form-validator.min.js"></script>
 <script src="main/js/contact-form-script.js"></script>
 <script src="main/js/custom.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
     $(function () { // 기존 멤버 정보 불러오기
@@ -191,8 +209,8 @@
             $("#email").val(same ? $('#info-email').val():'');
             $("#zip_num").val(same ? $('#info-zip_num').val():'');
             $("#address").val(same ? $('#info-address').val():'');
-            $("#address2").val(same ? $('#info-address2').val():'');
-            $("#address3").val(same ? $('#info-address3').val():'');
+            $("#detailAddress").val(same ? $('#info-address2').val():'');
+            $("#extraAddress").val(same ? $('#info-address3').val():'');
 
             if(same == true) {
                 $('#infoAddress input').filter('input:text')
@@ -204,7 +222,7 @@
         });
     });
 
-    $(function (){
+    $(function (){ // 입금자명 입력칸 숨기기
         $('input[type="radio"][name="paymentMethod"]').on('click', function(){
             switch (this.id){
                 case "kakaopay":
@@ -219,36 +237,72 @@
         });
     });
 
-    // IMP.init("TC0ONETIME"); // 가맹점 식별코드
-    // function requestPay() {
-    //     IMP.request_pay({
-    //         pg : 'kakaopay',
-    //         pay_method : 'card',
-    //         merchant_uid: "57008833-33004",
-    //         name : '당근 10kg',
-    //         amount : 1004,
-    //         buyer_email : 'Iamport@chai.finance',
-    //         buyer_name : '포트원 기술지원팀',
-    //         buyer_tel : '010-1234-5678',
-    //         buyer_addr : '서울특별시 강남구 삼성동',
-    //         buyer_postcode : '123-456'
-    //     }, function (rsp) { // callback
-    //         if (rsp.success) {
-    //             jQuery.ajax({
-    //                 url: '/purchase',
-    //                 type: 'POST',
-    //                 data: JSON.stringify({
-    //                   // 필요한 데이터가 있으면 추가 전달
-    //                 })
-    //             }).done(function (data) {
-    //
-    //             });
-    //             console.log(rsp);
-    //         } else {
-    //             console.log(rsp);
-    //         }
-    //     });
-    // }
+    function findAddress() { // 우편번호 찾기
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = '';
+                var extraAddr = '';
+
+                if (data.userSelectedType === 'R') {
+                    addr = data.roadAddress;
+                } else {
+                    addr = data.jibunAddress;
+                }
+
+                if(data.userSelectedType === 'R'){
+
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    document.getElementById("extraAddress").value = extraAddr;
+
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+
+                document.getElementById('zip_num').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
+    }
+
+    IMP.init("imp00441734"); // 가맹점 식별코드
+    function requestPay() { // 결제
+        IMP.request_pay({
+            pg : 'kakaopay',
+            pay_method : 'card',
+            merchant_uid: "57008833-33004",
+            name : 'Recifood',
+            amount : 1004,
+            buyer_email : 'Iamport@chai.finance',
+            buyer_name : '포트원 기술지원팀',
+            buyer_tel : '010-1234-5678',
+            buyer_addr : '서울특별시 강남구 삼성동',
+            buyer_postcode : '123-456'
+        }, function (rsp) { // callback
+            if (rsp.success) {
+                jQuery.ajax({
+                    url: '/insertPurchase',
+                    type: 'POST',
+                    data: JSON.stringify({
+                      // 필요한 데이터가 있으면 추가 전달
+                    })
+                }).done(function (data) {
+
+                });
+                console.log(rsp);
+            } else {
+                console.log(rsp);
+            }
+        });
+    }
 </script>
 </th:block>
 </html>
