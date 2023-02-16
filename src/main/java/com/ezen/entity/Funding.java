@@ -37,7 +37,7 @@ public class Funding {
 	private int viewcount; // 조회수
 	private String filename; // 파일이름
 	private String filepath; // 파일경로
-	
+
 	@ManyToOne
 	@JoinColumn(name="username", nullable=false, updatable=false)
 	private Member member;
