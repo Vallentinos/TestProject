@@ -27,6 +27,7 @@ public class Purchase {
     @Column(columnDefinition = "char default 'n'")
     private String agree; // 결제동의
 
+    private String purchase_uid; // 주문번호
     private String payer; // 입금자명
     private int quantity; // 구매수량
     private int result; // 진행상태 -> 1: 배송전, 2: 배송중, 3: 배송완료
