@@ -144,11 +144,9 @@
             const good = $("#good").val();
             const recipe_seq = $("#recipe_seq").val();
             const username = $("#username").val();
-            var html = "";
 
             console.log(username);
             console.log(heart);
-          //  if (heart > 0) {
                 // 좋아요 취소
                 $('#deleteHeart').on('click', function () {
                     $.ajax({
@@ -165,13 +163,11 @@
                             console.log("data=", data);
                             $("#heart").val(data);
                             location.reload();
-                            // $("#heart_area").load(location.href+' #heart_area');
                         }, error: function () {
                             console.log('좋아요 취소 실패 다시 시도해주세요.')
                         }
                     });
                 });
-            //} else {
                 // 좋아요
                 $('#insertHeart').on('click', function () {
                     $.ajax({
@@ -188,13 +184,11 @@
                             console.log("data=", data);
                             $("#heart").val(data);
                             location.reload();
-                            // $("#heart_area1").load(location.href+' #heart_area1');
                         }, error: function () {
                             console.log('좋아요 실패 다시 시도해주세요.')
                         }
                     });
                 });
-            //}
 
             if(document.getElementById("username").value == "") {
                 alert("로그인 후 작성가능합니다.");

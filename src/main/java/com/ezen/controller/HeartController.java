@@ -26,8 +26,7 @@ public class HeartController {
     RecipeService recipeService;
 
     @PostMapping("/heart")
-    @ResponseBody
-    public int insertHeart(@RequestBody Map<String, String> map) {
+    public @ResponseBody int insertHeart(@RequestBody Map<String, String> map) {
         System.out.println("사용자명: "+map.get("username"));
         System.out.println("레시피 Seq: " + map.get("recipe_seq"));
         System.out.println("좋아요 수: " + map.get("good"));

@@ -34,6 +34,7 @@
                         </div>
                             <div class="d-flex">
                                 <h5 th:text="아이디"/>
+                                <input type="hidden" class="form-control" id="username" th:value="${member.username}">
                                 <h5 class="ml-auto font-weight-bold" th:text="${member.username}"/>
                             </div>
                             <div class="d-flex">
@@ -48,7 +49,7 @@
                         <div class="title-left">
                             <h3>배송 정보</h3>
                         </div>
-                        <form class="needs-validation" novalidate>
+                        <form id="purchaseForm" class="needs-validation" novalidate>
                             <div id="infoAddress">
                             <div class="mb-3">
                                 <label for="name">이름 *</label>
@@ -106,11 +107,11 @@
                             <div class="title"> <span>결제수단</span> </div>
                             <div class="d-block my-3">
                                 <div class="custom-control custom-radio">
-                                    <input id="kakaopay" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <input id="kakaopay" name="paymentMethod" th:value="1" type="radio" class="custom-control-input" checked>
                                     <label class="custom-control-label" for="kakaopay">카카오페이</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input id="deposit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <input id="deposit" name="paymentMethod" th:value="2" type="radio" class="custom-control-input" required>
                                     <label class="custom-control-label" for="deposit">무통장입금</label>
                                 </div>
                             </div>
@@ -121,7 +122,8 @@
                                     <h5>신한은행&nbsp;&nbsp;110-3456-78900&nbsp;&nbsp;&nbsp;레시푸드</h5>
                                 </div>
                             </div>
-                            <hr class="mb-1"> </form>
+                            <hr class="mb-1">
+                        </form>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-6 mb-3">
@@ -147,9 +149,11 @@
                                 </div>
                                 <div class="rounded p-2 bg-light">
                                     <div class="media mb-2">
-                                        <div class="media-body"><p th:text="${funding.funding_name}"/></a>
+                                        <div class="media-body"><p th:text="${funding.funding_name}"/>
+                                            <input type="hidden" class="form-control" id="funding_seq" name="funding_seq" th:value="${funding.funding_seq}">
                                             <input type="hidden" class="form-control" id="funding_name" name="funding_name" th:value="${funding.funding_name}">
-                                            <input type="hidden" class="form-control" id="funding_amount" name="funding_amount" th:value="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}">
+                                            <input type="hidden" class="form-control" id="quantity" name="quantity" th:value="${p_quantity}">
+                                            <input type="hidden" class="form-control" id="funding_amount" name="funding_amount" th:value="${funding.price*p_quantity}">
                                             <div class="small text-muted">가격:&nbsp;<p th:text="${#numbers.formatInteger(funding.price,0,'COMMA')}"/><span class="mx-2">|</span> 수량: <p th:text="${p_quantity}"/><span class="mx-2">|</span> 합계: <p th:text="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}"/></div>
                                         </div>
                                     </div>
@@ -169,14 +173,24 @@
                                     <h4>전체 상품금액</h4>
                                     <div class="ml-auto font-weight-bold"> ₩<p th:text="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}"/></div>
                                 </div>
+                                <div class="d-flex">
+                                    <h4>배송비</h4>
+                                    <div class="ml-auto font-weight-bold"> ₩0</div>
+                                </div>
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>총 결제금액</h5>
                                     <div class="ml-auto h5" id="amount"> ₩<p th:text="${#numbers.formatInteger(funding.price*p_quantity,0,'COMMA')}"/></div>
                                 </div>
-                                <hr> </div>
+                                <hr>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="agree" th:value="y">
+                                    <label class="custom-control-label" for="agree">주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 d-flex shopping-box"> <a class="ml-auto btn hvr-hover" id="requestPay">결제</a> </div>
+                        <div class="col-12 d-flex shopping-box"> <a style="display:none;" class="ml-auto btn hvr-hover" id="requestPay2">결제</a> </div>
                     </div>
                 </div>
             </div>
@@ -224,14 +238,18 @@
         });
     });
 
-    $(function (){ // 입금자명 입력칸 숨기기
+    $(function (){ // 입금자명 입력칸, 구매버튼 숨기기
         $('input[type="radio"][name="paymentMethod"]').on('click', function(){
             switch (this.id){
                 case "kakaopay":
                     $('#inputPayer').hide();
+                    $('#requestPay2').hide();
+                    $('#requestPay').show();
                     break;
                 case "deposit":
                     $('#inputPayer').show();
+                    $('#requestPay2').show();
+                    $('#requestPay').hide();
                     break;
                 default:
                     break;
@@ -275,41 +293,142 @@
         }).open();
     }
 
-    $(function () {
+    $(function () { // 카카오페이 결제
+
         $('#requestPay').on('click', function () {
-            IMP.init("imp00441734"); // 가맹점 식별코드
+            if ($("#name").val() == "") {
+                alert("이름을 입력해 주세요");
+                $("#name").focus();
+                return false;
+            } else if ($("#phone").val() == "") {
+                alert("핸드폰 번호를 입력해 주세요.");
+                $("#phone").focus();
+                return false;
+            } else if ($("#email").val() == "") {
+                alert("이메일 주소를 입력해 주세요.");
+                $("#pwd").focus();
+                return false;
+            } else if ($("#zip_num").val() == "") {
+                alert("우편번호를 입력해 주세요");
+                $("#zip_num").focus();
+                return false;
+            } else if ($("#address").val() == "") {
+                alert("주소를 입력해 주세요.");
+                $("#address").focus();
+                return false;
+            if ($('#agree').is(':checked') == false) {
+                alert("결제 정보 제공에 동의해 주세요.");
+            } else {
+                IMP.init("imp00441734"); // 가맹점 식별코드
 
-            const funding_amount = $("#funding_amount").val();
-            const funding_name = $("#funding_name").val();
-            const name = $("#name").val();
-            const email = $("#email").val();
-            const phone = $("#phone").val();
+                const funding_seq = $("#funding_seq").val();
+                const funding_amount = $("#funding_amount").val();
+                const funding_name = $("#funding_name").val();
+                const username = $("#username").val();
+                const quantity = $("#quantity").val();
+                const name = $("#name").val();
+                const email = $("#email").val();
+                const phone = $("#phone").val();
+                const address = $("input[name=address]").val();
+                const zip_num = $("#zip_num").val();
+                const p_comment = $("#p_comment").val(); // 배송요청사항
+                const payment = $("#kakaopay").val();
+                const agree = $("#agree").val();
 
-            IMP.request_pay({
-                pg : 'kakaopay',
-                pay_method : 'card',
-                merchant_uid: 'recifood_' + new Date().getTime(),
-                name : funding_name,
-                amount : funding_amount,
-                buyer_email : email,
-                buyer_name : name,
-                buyer_tel : phone,
-            }, function (rsp) { // callback
-                if (rsp.success) {
-                    jQuery.ajax({
-                        url: '/insertPurchase',
-                        type: 'POST',
-                        data: JSON.stringify({
-                          // 필요한 데이터가 있으면 추가 전달
-                        })
-                    }).done(function (data) {
+                IMP.request_pay({
+                    pg: 'kakaopay',
+                    pay_method: 'card',
+                    merchant_uid: 'recifood_' + new Date().getTime(),
+                    name: funding_name,
+                    amount: funding_amount,
+                    buyer_email: email,
+                    buyer_name: name,
+                    buyer_tel: phone,
+                }, function (rsp) { // callback
+                    if (rsp.success) {
+                        jQuery.ajax({
+                            url: '/insertPurchase',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                'funding_seq' : funding_seq,
+                                'funding_name' : funding_name,
+                                'purchase_uid' : rsp.merchant_uid,
+                                'quantity' : quantity,
+                                'price' : funding_amount,
+                                'username' : username,
+                                'name' : name,
+                                'phone' : phone,
+                                'email' : email,
+                                'address' : address,
+                                'zip_num' : zip_num,
+                                'p_comment' : p_comment,
+                                'payment' : payment,
+                                'agree' : agree
+                            })
+                        });
+                        console.log(rsp);
+                        document.location.href = "/success"; // 결제 성공시 이동 페이지
+                    } else {
+                        console.log(rsp);
+                        document.location.href = "/fail"; // 결제 실패시 이동 페이지
+                    }
+                });
+            }
+        });
+    });
 
-                    });
-                    console.log(rsp);
-                } else {
-                    console.log(rsp);
-                }
-            });
+    $(function () { // 무통장입금
+
+        $('#requestPay2').on('click', function () {
+
+            if ($('#agree').is(':checked') == false) {
+                alert("결제 정보 제공에 동의해 주세요.");
+            } else {
+
+                const funding_seq = $("#funding_seq").val();
+                const funding_amount = $("#funding_amount").val();
+                const funding_name = $("#funding_name").val();
+                const username = $("#username").val();
+                const quantity = $("#quantity").val();
+                const name = $("#name").val();
+                const email = $("#email").val();
+                const phone = $("#phone").val();
+                const address = $("input[name=address]").val();
+                const zip_num = $("#zip_num").val();
+                const p_comment = $("#p_comment").val(); // 배송요청사항
+                const payment = $("#deposit").val();
+                const payer = $("#payer").val();
+                const agree = $("#agree").val();
+
+                jQuery.ajax({
+                    url: '/insertPurchase',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        'funding_seq': funding_seq,
+                        'funding_name': funding_name,
+                        'purchase_uid': 'recifood_' + new Date().getTime(),
+                        'quantity': quantity,
+                        'price': funding_amount,
+                        'username': username,
+                        'name': name,
+                        'phone': phone,
+                        'email': email,
+                        'address': address,
+                        'zip_num': zip_num,
+                        'p_comment': p_comment,
+                        'payment' : payment,
+                        'payer' : payer,
+                        'agree': agree
+                    }),
+                    success: function (data) {
+                        document.location.href = "/success"; // 결제 성공시 이동 페이지
+                    }, error: function () {
+                        document.location.href = "/fail"; // 결제 실패시 이동 페이지
+                    }
+                });
+            }
         });
     });
 </script>
