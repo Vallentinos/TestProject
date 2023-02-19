@@ -12,6 +12,8 @@ public interface PurchaseService {
 
     void deletePurchase(Purchase purchase);
 
+    Purchase getPurchase(Purchase purchase);
+
     Page<Purchase> findByMember_Username(int page, String username);
 
 }

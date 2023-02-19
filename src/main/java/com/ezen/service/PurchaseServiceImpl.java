@@ -19,6 +19,13 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Transactional // 메서드가 포함하고 있는 작업 중에 하나라도 실패할 경우 전체 작업을 취소한다.
     @Override
     public void insertPurchase(Purchase purchase) {
+        if(purchase.getP_comment() == null) {
+            purchase.setP_comment("없음");
+        }
+        if(purchase.getPayment() == 1) {
+            purchase.setPayer("없음");
+        }
+        purchase.setResult(1);
         purchaseRepository.save(purchase);
     }
 
@@ -30,6 +37,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public void deletePurchase(Purchase purchase) {
 
+    }
+
+    @Override
+    public Purchase getPurchase(Purchase purchase) {
+
+        return purchaseRepository.findById(purchase.getPurchaseSeq()).get();
     }
 
     @Override

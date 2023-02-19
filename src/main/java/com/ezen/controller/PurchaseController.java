@@ -72,13 +72,23 @@ public class PurchaseController {
         purchase.setAddress(map.get("address"));
         purchase.setPurchase_uid(map.get("purchase_uid"));
         purchase.setPrice(Integer.parseInt(map.get("price")));
+        purchase.setQuantity(Integer.parseInt(map.get("quantity")));
+        purchase.setPayment(Integer.parseInt(map.get("payment")));
+        purchase.setPayer(map.get("payer"));
+        purchase.setP_comment(map.get("p_comment"));
+        purchase.setAgree(map.get("agree"));
         purchase.setFunding(funding);
         purchase.setMember(member);
+
         purchaseService.insertPurchase(purchase);
     }
 
     @GetMapping("/success")
-    public String successPurchase() {
+    public String successPurchase(@ModelAttribute("purchase") Purchase purchase, Model model) {
+
+        System.out.println("결제 주문번호: " + purchase);
+        model.addAttribute("purchase", purchase);
+
         return "purchase/successPurchase";
     }
 
@@ -96,5 +106,12 @@ public class PurchaseController {
         model.addAttribute("purchaseList", purchaseList);
 
         return "purchase/myPurchaseList";
+    }
+
+    @GetMapping("/getPurchase")
+    public String getPurchase(Purchase purchase, Model model) {
+
+        model.addAttribute("purchase", purchaseService.getPurchase(purchase));
+        return "purchase/getPurchase";
     }
 }
