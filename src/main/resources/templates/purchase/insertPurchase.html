@@ -78,19 +78,19 @@
                             </div>
                             <div class="mb-3">
                                 <label for="address">주소 *</label>
-                                <input type="hidden" class="form-control" id="info-address" name="address" th:value="${address.addr1}">
+                                <input type="hidden" class="form-control" id="info-address" name="info-address" th:value="${address.addr1}">
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="detailAddress">상세주소 *</label>
-                                    <input type="hidden" class="form-control" id="info-address2" name="address" th:value="${address.addr2}">
+                                    <input type="hidden" class="form-control" id="info-address2" name="info-address" th:value="${address.addr2}">
                                     <input type="text" class="form-control" id="detailAddress" name="address" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="extraAddress"></label>
-                                    <input type="hidden" class="form-control" id="info-address3" name="address" th:value="${address.addr3}">
-                                    <input type="text" class="form-control" id="extraAddress" name="address"placeholder="참고사항">
+                                    <input type="hidden" class="form-control" id="info-address3" name="info-address" th:value="${address.addr3}">
+                                    <input type="text" class="form-control" id="extraAddress" name="address" placeholder="참고사항">
                                 </div>
                             </div>
                             </div>
@@ -306,7 +306,7 @@
                 return false;
             } else if ($("#email").val() == "") {
                 alert("이메일 주소를 입력해 주세요.");
-                $("#pwd").focus();
+                $("#email").focus();
                 return false;
             } else if ($("#zip_num").val() == "") {
                 alert("우편번호를 입력해 주세요");
@@ -316,7 +316,7 @@
                 alert("주소를 입력해 주세요.");
                 $("#address").focus();
                 return false;
-            if ($('#agree').is(':checked') == false) {
+            } else if ($('#agree').is(':checked') == false) {
                 alert("결제 정보 제공에 동의해 주세요.");
             } else {
                 IMP.init("imp00441734"); // 가맹점 식별코드
@@ -329,11 +329,24 @@
                 const name = $("#name").val();
                 const email = $("#email").val();
                 const phone = $("#phone").val();
-                const address = $("input[name=address]").val();
                 const zip_num = $("#zip_num").val();
                 const p_comment = $("#p_comment").val(); // 배송요청사항
                 const payment = $("#kakaopay").val();
                 const agree = $("#agree").val();
+
+                var param = [];
+                var address = $("[name='address']");
+
+                for(var i=0; i<address.length; i++) {
+                    param.push(address[i].value);
+                }
+
+                var getAddress = '';
+
+                param.map(function (item){
+                    getAddress += item + ',';
+                });
+                getAddress = getAddress.substring(0, getAddress.lastIndexOf(','));
 
                 IMP.request_pay({
                     pg: 'kakaopay',
@@ -360,7 +373,7 @@
                                 'name' : name,
                                 'phone' : phone,
                                 'email' : email,
-                                'address' : address,
+                                'address' : getAddress,
                                 'zip_num' : zip_num,
                                 'p_comment' : p_comment,
                                 'payment' : payment,
@@ -381,8 +394,31 @@
     $(function () { // 무통장입금
 
         $('#requestPay2').on('click', function () {
-
-            if ($('#agree').is(':checked') == false) {
+            if ($("#name").val() == "") {
+                alert("이름을 입력해 주세요");
+                $("#name").focus();
+                return false;
+            } else if ($("#phone").val() == "") {
+                alert("핸드폰 번호를 입력해 주세요.");
+                $("#phone").focus();
+                return false;
+            } else if ($("#email").val() == "") {
+                alert("이메일 주소를 입력해 주세요.");
+                $("#email").focus();
+                return false;
+            } else if ($("#zip_num").val() == "") {
+                alert("우편번호를 입력해 주세요");
+                $("#zip_num").focus();
+                return false;
+            } else if ($("#address").val() == "") {
+                alert("주소를 입력해 주세요.");
+                $("#address").focus();
+                return false;
+            } else if ($("#payer").val() == "") {
+                alert("입금자명을 입력해 주세요.");
+                $("#payer").focus();
+                return false;
+            } else if ($('#agree').is(':checked') == false) {
                 alert("결제 정보 제공에 동의해 주세요.");
             } else {
 
@@ -394,12 +430,26 @@
                 const name = $("#name").val();
                 const email = $("#email").val();
                 const phone = $("#phone").val();
-                const address = $("input[name=address]").val();
                 const zip_num = $("#zip_num").val();
                 const p_comment = $("#p_comment").val(); // 배송요청사항
                 const payment = $("#deposit").val();
                 const payer = $("#payer").val();
                 const agree = $("#agree").val();
+
+                var param = [];
+                var address = $("[name='address']");
+
+                for(var i=0; i<address.length; i++) {
+                    param.push(address[i].value);
+                }
+
+                var getAddress = '';
+
+                param.map(function (item){
+                    getAddress += item + ',';
+                });
+                getAddress = getAddress.substring(0, getAddress.lastIndexOf(','));
+
 
                 jQuery.ajax({
                     url: '/insertPurchase',
@@ -415,7 +465,7 @@
                         'name': name,
                         'phone': phone,
                         'email': email,
-                        'address': address,
+                        'address': getAddress,
                         'zip_num': zip_num,
                         'p_comment': p_comment,
                         'payment' : payment,
