@@ -5,7 +5,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>주문페이지</title>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -13,20 +13,13 @@
     <div class="all-title-box">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12" th:if="${category.equals(2)}">
-            <h2>자유게시판</h2>
+          <div class="col-lg-12">
+            <h2>회원 목록</h2>
             <ul class="breadcrumb">
               <li class="breadcrumb-item"><a href="home">Home</a></li>
-              <li class="breadcrumb-item active">Free</li>
+              <li class="breadcrumb-item active">Members</li>
             </ul>
           </div>
-            <div class="col-lg-12" th:if="${category.equals(1)}">
-                <h2>공지사항</h2>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="home">Home</a></li>
-                    <li class="breadcrumb-item active">Notice</li>
-                </ul>
-            </div>
         </div>
       </div>
     </div>
@@ -41,46 +34,54 @@
               <table class="table">
                 <thead>
                 <tr th:align="center">
-                  <th>번호</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>작성일</th>
+                  <th>아이디</th>
+                  <th>이름</th>
+                  <th>핸드폰번호</th>
+                  <th>이메일</th>
+                  <th>등급</th>
+                  <th>가입일</th>
                 </tr>
                 </thead>
-                <tr th:each="board:${boardList}">
-                  <td class="remove-pr">
-                    <p th:text="${board.boardSeq}" th:align="center"/>
+                <tr th:each="member:${memberList}" th:align="center">
+                  <td class="price-pr">
+                    <a th:href="@{/member(username=${member.username})}" th:text="${member.username}"/>
                   </td>
                   <td class="price-pr">
-                    <a th:href="@{/board(boardSeq=${board.boardSeq})}" th:text="${board.title}"/>
+                    <p th:text="${member.name}"/>
+                  </td>
+                  <td class="price-pr">
+                    <p th:text="${member.phone}"/>
                   </td>
                   <td class="total-pr">
-                    <p th:text="${board.member?.username}" th:align="center"/>
+                    <p th:text="${member.email}"/>
+                  </td>
+                  <td class="total-pr">
+                    <p th:text="${member.degree}"/>
                   </td>
                   <td class="name-pr">
-                    <p th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}" th:align="center"/>
+                    <p th:text="${#dates.format(member.regdate, 'yyyy-MM-dd')}"/>
                   </td>
                 </tr>
               </table>
             </div><br><br>
               <!-- 페이징 처리 -->
-            <div th:if="${!boardList.isEmpty()}">
+            <div th:if="${!memberList.isEmpty()}">
               <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${!boardList.hasPrevious()} ? 'disabled'">
-                  <a class="page-link" th:href="@{boardList(category=${param.category}, page=${boardList.number})}">
+                <li class="page-item" th:classappend="${!memberList.hasPrevious()} ? 'disabled'">
+                  <a class="page-link" th:href="@{memberList(page=${memberList.number})}">
                     <span>이전</span>
                   </a>
                 </li>
-                <li th:each="page: ${#numbers.sequence(1, boardList.getTotalPages())}"
-                    th:if="${page >= boardList.number-4 and page <= boardList.number+6}"
-                    th:classappend="${page == boardList.number+1} ? 'active'"
+                <li th:each="page: ${#numbers.sequence(1, memberList.getTotalPages())}"
+                    th:if="${page >= memberList.number-4 and page <= memberList.number+6}"
+                    th:classappend="${page == memberList.number+1} ? 'active'"
                     class="page-item">
 <!--                  <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>-->
-                  <a th:text="${page}" class="page-link" th:href="@{boardList(category=${param.category}, page=${page})}"></a>
+                  <a th:text="${page}" class="page-link" th:href="@{memberList(page=${page})}"></a>
                 </li>
 
-                <li class="page-item" th:classappend="${!boardList.hasNext()} ? 'disabled'">
-                  <a class="page-link" th:href="@{boardList(category=${param.category}, page=${boardList.number+2})}">
+                <li class="page-item" th:classappend="${!memberList.hasNext()} ? 'disabled'">
+                  <a class="page-link" th:href="@{memberList(page=${memberList.number+2})}">
                     <span>다음</span>
                   </a>
                 </li>
@@ -99,11 +100,6 @@
                   <button class="btn btn-theme" type="button">검색</button>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-sm-6" th:if="${category.equals(2) && session.loginMember != null}">
-            <div class="update-box">
-              <input value="등록" type="submit" th:onclick="|location.href='@{/insertBoard}'|">
             </div>
           </div>
         </div>

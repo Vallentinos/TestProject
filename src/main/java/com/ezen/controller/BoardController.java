@@ -5,6 +5,7 @@ import com.ezen.entity.BoardReply;
 import com.ezen.entity.Member;
 import com.ezen.service.BoardReplyService;
 import com.ezen.service.BoardService;
+import com.ezen.service.MemberService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,8 @@ public class BoardController {
     BoardService boardService;
     @Autowired
     BoardReplyService boardReplyService;
+    @Autowired
+    MemberService memberService;
 
 //    @GetMapping("/boardList")
 //    public String boardList() {
@@ -51,9 +54,11 @@ public class BoardController {
     @PostMapping("/insertBoard")
     public String insertBoard(Board board, @SessionAttribute("member") Member member) {
         log.info(board);
-        board.setMember(member);
+        Member findMember = memberService.getMember(member);
+        board.setMember(findMember);
 
-        if(member.getRole() == ADMIN) {
+        System.out.println("관리자 " + board.getMember().getRole());
+        if(board.getMember().getRole().equals(ADMIN)) {
             board.setCategory("1");
             boardService.insertBoard(board);
             return "redirect:/boardList?category=1";

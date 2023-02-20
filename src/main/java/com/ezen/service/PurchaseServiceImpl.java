@@ -51,4 +51,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "purchaseSeq");
         return purchaseRepository.findAllByMember_Username(username, pageable);
     }
+
+    @Override
+    public Page<Purchase> getPurchaseList(int page) {
+
+        Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "purchaseSeq");
+        return purchaseRepository.getPurchaseList(pageable);
+    }
 }

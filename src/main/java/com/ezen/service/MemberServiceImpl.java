@@ -3,10 +3,15 @@ package com.ezen.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.ezen.entity.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ezen.entity.Member;
 import com.ezen.persistence.MemberRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,9 +55,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Member> getMemberList(Member Member) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Member> getMemberList(int page) {
+
+		Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "regdate");
+		return memberRepository.getMemberList(pageable);
 	}
 
 	@Override

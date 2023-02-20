@@ -108,6 +108,16 @@ public class PurchaseController {
         return "purchase/myPurchaseList";
     }
 
+    @RequestMapping("/allPurchaseList")
+    public String allPurchaseList(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+
+        Page<Purchase> purchaseList = purchaseService.getPurchaseList(page);
+
+        model.addAttribute("purchaseList", purchaseList);
+
+        return "admin/purchaseList";
+    }
+
     @GetMapping("/getPurchase")
     public String getPurchase(Purchase purchase, Model model) {
 

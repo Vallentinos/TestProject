@@ -60,7 +60,7 @@
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="submit-button text-center">
-                    <button class="btn hvr-hover" type="button" th:onclick="|location.href='@{/updateBoard(boardSeq=${board.boardSeq})}'|">수정</button>
+                    <button class="btn hvr-hover" type="button" th:if="${session.loginMember != null && session.loginMember.username.equals(board.member.username)}" th:onclick="|location.href='@{/updateBoard(boardSeq=${board.boardSeq})}'|">수정</button>
                     <button class="btn hvr-hover" type="button" th:onclick="|location.href='@{/boardList}'|">뒤로</button>
                   </div>
                 </div>

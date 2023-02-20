@@ -1,5 +1,7 @@
 package com.ezen.persistence;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ezen.entity.Member;
@@ -11,4 +13,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     @Query(value = "select m from Member m where m.username=:username and m.email=:email")
     Member findMemberPwd(String username, String email); // 비밀번호 찾기
+
+    @Query("select m from Member m")
+    Page<Member> getMemberList(Pageable pageable);
 }

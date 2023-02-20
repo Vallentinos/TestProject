@@ -5,21 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.ezen.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import com.ezen.entity.Degree;
-import com.ezen.entity.Funding;
-import com.ezen.entity.Member;
-import com.ezen.entity.Recipe;
-import com.ezen.entity.Role;
 import com.ezen.persistence.MemberRepository;
 import com.ezen.service.FundingService;
 import com.ezen.service.MemberService;
@@ -67,10 +61,9 @@ public class MemberController {
 
         log.info("findMember: " + findMember);
 
-        HttpSession session = request.getSession();
-        session.setAttribute("loginMember", loginMember);
-
         if (findMember != null && findMember.getPassword().equals(loginMember.getPassword())) {
+            HttpSession session = request.getSession();
+            session.setAttribute("loginMember", findMember);
             model.addAttribute("loginMember", findMember);
             return "redirect:/home";
         } else {
@@ -170,6 +163,11 @@ public class MemberController {
         return "redirect:/member";
     }
 
+    @GetMapping("/deleteMember")
+    public String deleteMember() {
+        return "home";
+    }
+
     @GetMapping("/findMember")
     public String memberCheck() {
         return "sign/findMember";
@@ -212,6 +210,27 @@ public class MemberController {
     	} else {
     		return "sign/mypage";
     	}
+    }
+
+    @GetMapping("/adminPage")
+    public String adminPage(HttpSession session, Member member) {
+        Member loginMember = (Member)session.getAttribute("loginMember");
+
+        if (loginMember == null) {
+            return "sign/login";
+        } else {
+            return "admin/adminPage";
+        }
+    }
+
+    @RequestMapping("/allMemberList")
+    public String allMemberList(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+
+        Page<Member> memberList = memberService.getMemberList(page);
+
+        model.addAttribute("memberList", memberList);
+
+        return "admin/memberList";
     }
 
 }
