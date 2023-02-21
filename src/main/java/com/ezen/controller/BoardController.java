@@ -52,18 +52,19 @@ public class BoardController {
     }
 
     @PostMapping("/insertBoard")
-    public String insertBoard(Board board, @SessionAttribute("member") Member member) {
-        log.info(board);
-        Member findMember = memberService.getMember(member);
-        board.setMember(findMember);
+    public String insertBoard(Board board, @SessionAttribute("member") Member member,
+                              @RequestParam("role") String role) {
 
-        System.out.println("관리자 " + board.getMember().getRole());
-        if(board.getMember().getRole().equals(ADMIN)) {
+        Member findMember = memberService.getMember(member);
+
+        if(role.equals("ADMIN")) {
             board.setCategory("1");
+            board.setMember(findMember);
             boardService.insertBoard(board);
             return "redirect:/boardList?category=1";
         } else {
             board.setCategory("2");
+            board.setMember(findMember);
             boardService.insertBoard(board);
             return "redirect:/boardList?category=2";
         }

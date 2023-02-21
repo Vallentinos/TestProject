@@ -3,7 +3,9 @@ package com.ezen.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.ezen.entity.Purchase;
+import com.ezen.entity.QMember;
+import com.ezen.entity.Search;
+import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ezen.entity.Member;
@@ -55,10 +57,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Page<Member> getMemberList(int page) {
+	public Page<Member> getMemberList(int page, Search search) {
+		BooleanBuilder builder = new BooleanBuilder();
 
+		QMember qMember = QMember.member;
+
+		if(search.getSearchCondition().equals("USERNAME")) {
+			builder.and(qMember.member.username.like("%" + search.getSearchKeyword() + "%"));
+		} else if (search.getSearchCondition().equals("NAME")) {
+			builder.and(qMember.name.like("%" + search.getSearchKeyword() + "%"));
+		} else if (search.getSearchCondition().equals("EMAIL")) {
+			builder.and(qMember.email.like("%" + search.getSearchKeyword() + "%"));
+		}
 		Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "regdate");
-		return memberRepository.getMemberList(pageable);
+		return memberRepository.findAll(builder, pageable);
 	}
 
 	@Override

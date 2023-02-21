@@ -1,7 +1,10 @@
 package com.ezen.service;
 
 import com.ezen.entity.Purchase;
+import com.ezen.entity.QPurchase;
+import com.ezen.entity.Search;
 import com.ezen.persistence.PurchaseRepository;
+import com.querydsl.core.BooleanBuilder;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,9 +56,18 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Page<Purchase> getPurchaseList(int page) {
+    public Page<Purchase> getPurchaseList(int page, Search search) {
+        BooleanBuilder builder = new BooleanBuilder();
 
+        QPurchase qPurchase = QPurchase.purchase;
+
+        if(search.getSearchCondition().equals("USERNAME")) {
+            builder.and(qPurchase.member.username.like("%" + search.getSearchKeyword() + "%"));
+        } else if (search.getSearchCondition().equals("FUNDING_NAME")) {
+            builder.and(qPurchase.funding.funding_name.like("%" + search.getSearchKeyword() + "%"));
+        }
         Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "purchaseSeq");
-        return purchaseRepository.getPurchaseList(pageable);
+        System.out.println("검색어" + builder);
+        return purchaseRepository.findAll(builder, pageable);
     }
 }

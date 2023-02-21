@@ -1,12 +1,10 @@
 package com.ezen.controller;
 
-import com.ezen.entity.Board;
-import com.ezen.entity.Funding;
-import com.ezen.entity.Member;
-import com.ezen.entity.Purchase;
+import com.ezen.entity.*;
 import com.ezen.service.FundingService;
 import com.ezen.service.MemberService;
 import com.ezen.service.PurchaseService;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,26 +29,33 @@ public class PurchaseController {
     private FundingService fundingService;
 
     @PostMapping("/purchase")
-    public String insertPurchaseForm(@SessionAttribute("member") Member member, Funding funding,
-                                     @RequestParam("p_quantity") int p_quantity, Model model) {
+    public String insertPurchaseForm(Funding funding, @RequestParam("p_quantity") int p_quantity,
+                                     Model model, HttpSession session) {
 
-        Map<String, String> addrMap = new HashMap<>();
-        String[] addressArr = null;
+        Member loginMember = (Member) session.getAttribute("loginMember");
 
-        Funding findFunding = fundingService.getFunding(funding);
-        Member findMember = memberService.getMember(member);
-        addressArr = findMember.getAddress().split(",");
+        if(loginMember == null) {
+            return "sign/login";
+        } else {
 
-        addrMap.put("addr1", addressArr[0]);
-        addrMap.put("addr2", addressArr[1]);
-        addrMap.put("addr3", addressArr[2]);
+            Map<String, String> addrMap = new HashMap<>();
+            String[] addressArr = null;
 
-        model.addAttribute("funding", findFunding);
-        model.addAttribute("p_quantity", p_quantity);
-        model.addAttribute("member", findMember);
-        model.addAttribute("address", addrMap);
+            Funding findFunding = fundingService.getFunding(funding);
+            Member findMember = memberService.getMember(loginMember);
+            addressArr = findMember.getAddress().split(",");
 
-        return "purchase/insertPurchase";
+            addrMap.put("addr1", addressArr[0]);
+            addrMap.put("addr2", addressArr[1]);
+            addrMap.put("addr3", addressArr[2]);
+
+            model.addAttribute("funding", findFunding);
+            model.addAttribute("p_quantity", p_quantity);
+            model.addAttribute("member", findMember);
+            model.addAttribute("address", addrMap);
+
+            return "purchase/insertPurchase";
+        }
     }
 
     @PostMapping("/insertPurchase")
@@ -109,9 +114,15 @@ public class PurchaseController {
     }
 
     @RequestMapping("/allPurchaseList")
-    public String allPurchaseList(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-
-        Page<Purchase> purchaseList = purchaseService.getPurchaseList(page);
+    public String allPurchaseList(@RequestParam(value = "page", defaultValue = "1") int page, Search search, Model model) {
+        if(search.getSearchCondition() == null) {
+            search.setSearchCondition("USERNAME");
+        }
+        if(search.getSearchKeyword() == null) {
+            search.setSearchKeyword("");
+        }
+        System.out.println("검색어" + search);
+        Page<Purchase> purchaseList = purchaseService.getPurchaseList(page, search);
 
         model.addAttribute("purchaseList", purchaseList);
 

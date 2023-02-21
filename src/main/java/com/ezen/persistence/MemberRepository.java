@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ezen.entity.Member;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface MemberRepository extends JpaRepository<Member, String> {
+public interface MemberRepository extends JpaRepository<Member, String>, QuerydslPredicateExecutor<Member> {
     @Query(value = "select m from Member m where m.name=:name and m.email=:email")
     Member findMemberId(String name, String email); // 아이디 찾기
 

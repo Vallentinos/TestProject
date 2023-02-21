@@ -3,6 +3,7 @@ package com.ezen.service;
 import java.util.List;
 
 import com.ezen.entity.Member;
+import com.ezen.entity.Search;
 import org.springframework.data.domain.Page;
 
 public interface MemberService {
@@ -15,7 +16,7 @@ public interface MemberService {
 	
 	Member getMember(Member member);
 
-	Page<Member> getMemberList(int page);
+	Page<Member> getMemberList(int page, Search search);
 
 	Member findMemberId(String name, String email);
 

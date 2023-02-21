@@ -164,8 +164,9 @@ public class MemberController {
     }
 
     @GetMapping("/deleteMember")
-    public String deleteMember() {
-        return "home";
+    public String deleteMember(@ModelAttribute("member") Member member) {
+        memberService.deleteMember(member);
+        return "redirect:/home";
     }
 
     @GetMapping("/findMember")
@@ -213,7 +214,7 @@ public class MemberController {
     }
 
     @GetMapping("/adminPage")
-    public String adminPage(HttpSession session, Member member) {
+    public String adminPage(HttpSession session) {
         Member loginMember = (Member)session.getAttribute("loginMember");
 
         if (loginMember == null) {
@@ -224,9 +225,14 @@ public class MemberController {
     }
 
     @RequestMapping("/allMemberList")
-    public String allMemberList(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-
-        Page<Member> memberList = memberService.getMemberList(page);
+    public String allMemberList(@RequestParam(value = "page", defaultValue = "1") int page, Search search, Model model) {
+        if(search.getSearchCondition() == null) {
+            search.setSearchCondition("USERNAME");
+        }
+        if(search.getSearchKeyword() == null) {
+            search.setSearchKeyword("");
+        }
+        Page<Member> memberList = memberService.getMemberList(page, search);
 
         model.addAttribute("memberList", memberList);
 
