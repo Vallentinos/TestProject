@@ -129,4 +129,15 @@ public class BoardController {
 
         return "board/freeBoardList";
     }
+
+    @RequestMapping("/myBoardList")
+    public String getFreeBoardList(@RequestParam(value = "page", defaultValue = "1") int page,
+                                   @SessionAttribute("member") String username, Model model) {
+
+        Page<Board> boardList = boardService.getMyBoardList(page, username);
+        log.info("게시글 목록: " + boardList.getContent());
+        model.addAttribute("boardList", boardList);
+
+        return "board/myBoardList";
+    }
 }

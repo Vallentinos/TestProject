@@ -2,7 +2,7 @@ package com.ezen.service;
 
 import com.ezen.entity.Board;
 import com.ezen.entity.QBoard;
-import com.ezen.entity.Search;
+import com.ezen.dto.Search;
 import com.ezen.persistence.BoardRepository;
 import com.querydsl.core.BooleanBuilder;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @Log4j2
@@ -69,5 +68,12 @@ public class BoardServiceImpl implements BoardService{
 
         Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "boardSeq");
         return boardRepository.findAllByCategory(category, pageable);
+    }
+
+    @Override
+    public Page<Board> getMyBoardList(int page, String username) {
+
+        Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "boardSeq");
+        return boardRepository.getMyBoardList(username, pageable);
     }
 }

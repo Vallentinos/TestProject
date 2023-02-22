@@ -2,6 +2,8 @@ package com.ezen.service;
 
 import com.ezen.entity.Board;
 import com.ezen.entity.BoardReply;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,4 +16,5 @@ public interface BoardReplyService {
     void deleteBoardReply(BoardReply boardReply); // 댓글 삭제
 
     List<BoardReply> getBoardReplyList(Board board);
+
 }

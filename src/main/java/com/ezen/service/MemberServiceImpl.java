@@ -1,10 +1,9 @@
 package com.ezen.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.ezen.entity.QMember;
-import com.ezen.entity.Search;
+import com.ezen.dto.Search;
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
