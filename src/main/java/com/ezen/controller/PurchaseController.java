@@ -1,5 +1,6 @@
 package com.ezen.controller;
 
+import com.ezen.dto.Search;
 import com.ezen.entity.*;
 import com.ezen.service.FundingService;
 import com.ezen.service.MemberService;
@@ -11,11 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 @Log4j2
@@ -29,7 +28,7 @@ public class PurchaseController {
     private FundingService fundingService;
 
     @PostMapping("/purchase")
-    public String insertPurchaseForm(Funding funding, @RequestParam("p_quantity") int p_quantity,
+    public String insertPurchaseForm(Funding funding, @RequestParam("quantity") int quantity,
                                      Model model, HttpSession session) {
 
         Member loginMember = (Member) session.getAttribute("loginMember");
@@ -50,7 +49,7 @@ public class PurchaseController {
             addrMap.put("addr3", addressArr[2]);
 
             model.addAttribute("funding", findFunding);
-            model.addAttribute("p_quantity", p_quantity);
+            model.addAttribute("quantity", quantity);
             model.addAttribute("member", findMember);
             model.addAttribute("address", addrMap);
 
