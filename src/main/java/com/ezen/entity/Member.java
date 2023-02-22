@@ -54,7 +54,7 @@ public class Member {
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 식자재
 	private List<Food> foodList = new ArrayList<Food>();
 	
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY) // 게시판
+	@OneToMany(mappedBy = "member", fetch = FetchType.EAGER) // 게시판
 	private List<Board> boardList = new ArrayList<Board>();
 	
 	@OneToMany(mappedBy="member", fetch=FetchType.EAGER) // 레시피

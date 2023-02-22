@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface BoardRepository extends JpaRepository<Board, Long>, QuerydslPredicateExecutor<Board> {
     @Query("select b from Board b where b.member.username=:username")
-    Page<Board> getMyBoardList(String username, Pageable pageable); // 자기가 쓴 게시물
+    Page<Board> getMyBoardList(String username, Pageable pageable); // 자기가 쓴 게시글
 
     Page<Board> findAllByCategory(String category, Pageable pageable);
 
