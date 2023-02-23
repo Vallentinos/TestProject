@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.ezen.dto.Search;
+import com.ezen.dto.Email;
+import com.ezen.entity.Search;
 import com.ezen.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -189,16 +190,16 @@ public class MemberController {
         return "/sign/findId";
     }
 
-    @PostMapping("/findPwd")
-    public String findPwd(Member member, Model model) {
+    @PostMapping("/sendEmail")
+    public String findPwdAndSendEmail(@RequestParam("email") String memberEmail, Member member, Model model) {
         Member memberPwd = memberService.findMemberPwd(member.getUsername(), member.getEmail());
-        log.info("비밀번호 찾기: " + memberPwd);
 
         if(memberPwd == null) {
             model.addAttribute("find", 0);
         } else {
+            Email email = memberService.sendEmailAndChangePassword(memberEmail);
+            memberService.sendEmail(email);
             model.addAttribute("find", 1);
-            model.addAttribute("member", memberPwd);
         }
         return "sign/findPwd";
     }

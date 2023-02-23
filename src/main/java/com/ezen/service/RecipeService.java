@@ -6,15 +6,15 @@ import org.springframework.data.domain.Page;
 
 import com.ezen.entity.Recipe;
 import com.ezen.entity.RecipeProcedure;
+import com.ezen.entity.Search;
 
 public interface RecipeService {
 	void insertRecipe(Recipe recipe, List<RecipeProcedure> listProcedure);
 	
 	void updateRecipe(Recipe recipe, List<RecipeProcedure> listProcedure);
 
-	// 추천수 추가/삭제
 	void updateGood(Recipe recipe);
-	
+
 	void deleteRecipe(Recipe recipe);
 	
 	Page<Recipe> getRecipeList(String username, int page);
@@ -37,4 +37,6 @@ public interface RecipeService {
 	Page<Recipe> getRecipeListGood(Recipe recipe, int page);
 	
 	List<Recipe> getBestRecipeList(Recipe recipe);
+	
+	Page<Recipe> getRecipeList(int page, Search search);
 }

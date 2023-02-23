@@ -1,6 +1,6 @@
 package com.ezen.controller;
 
-import com.ezen.dto.Search;
+import com.ezen.entity.Search;
 import com.ezen.entity.*;
 import com.ezen.service.FundingService;
 import com.ezen.service.MemberService;

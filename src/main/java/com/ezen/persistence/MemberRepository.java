@@ -15,6 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, String>, Queryds
     @Query(value = "select m from Member m where m.username=:username and m.email=:email")
     Member findMemberPwd(String username, String email); // 비밀번호 찾기
 
-    @Query("select m from Member m")
-    Page<Member> getMemberList(Pageable pageable);
+    @Query(value = "select m from Member m where m.email=:email")
+    Member findEmailMember(String email);
+
 }
