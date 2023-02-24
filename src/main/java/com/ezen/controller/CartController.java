@@ -33,7 +33,7 @@ public class CartController {
 		if (loginMember == null) {
 			return "sign/login";
 		} else  {
-			List<CartDetail> cartList = cartService.getCartList(loginMember.getUsername());
+			List<Cart> cartList = cartService.getCartList(loginMember.getUsername());
 			
 			model.addAttribute("cartList", cartList);
 			//model.addAttribute("totalPrice", cart.getQuantity()*cart.getPrice());

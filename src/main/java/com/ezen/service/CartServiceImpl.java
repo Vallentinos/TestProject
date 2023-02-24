@@ -41,13 +41,13 @@ public class CartServiceImpl implements CartService {
 		cartRepo.deleteById(cart.getCart_seq());
 	}
 
-	@Override
-	public List<CartDetail> getCartList(String username) {
+/*	@Override
+	public List<CartDetail> getCartDetailList(String username) {
 		
 		String sql =
 		  "SELECT 1 AS cd_seq, fd.funding_seq funding_seq, fd.filename filename, fd.funding_name funding_name, fd.price price, " +
 		  "c.cart_seq cart_seq, c.quantity quantity, c.username username, c.regdate regdate, c.totalprice " + 
-		  "FROM Funding fd, Cart c " +
+		  "FROM Funding fd, CartDetail c " +
 		  "WHERE fd.funding_seq=c.funding_seq AND c.username=?";
 
 		Query query = entityManager.createNativeQuery(sql, "CartListResults");
@@ -55,6 +55,24 @@ public class CartServiceImpl implements CartService {
 		
 		@SuppressWarnings("unchecked")
 		List<CartDetail> cartlist = query.getResultList();
+		
+		return cartlist;
+	}*/
+	
+	@Override
+	public List<Cart> getCartList(String username) {
+		
+		String sql =
+		  "SELECT fd.funding_seq funding_seq, fd.filename filename, fd.funding_name funding_name, fd.price price, " +
+		  "c.cart_seq cart_seq, c.quantity quantity, c.username username, c.regdate regdate, c.totalprice" + 
+		  "FROM Funding fd, Cart c " +
+		  "WHERE fd.funding_seq=c.funding_seq AND c.username=?";
+
+		Query query = entityManager.createNativeQuery(sql, "CartListResults");
+		query.setParameter(1, username);
+		
+		@SuppressWarnings("unchecked")
+		List<Cart> cartlist = query.getResultList();
 		
 		return cartlist;
 	}

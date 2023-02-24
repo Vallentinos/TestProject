@@ -65,7 +65,7 @@
 					                <i class="fa-solid fa-plus" name="plus"></i>
 					            </td>
 					            <td class="remove-pr total">
-					                <p th:text="|${#numbers.formatInteger(cart.price,0,'COMMA')} 원|" id="sum" name="sum">원</p>
+					                <p th:text="|${#numbers.formatInteger(cart.totalprice,0,'COMMA')} 원|" id="sum" name="sum">원</p>
 					            </td>
 					            <td class="remove-pr"><a><button class="update" name="">확인</button></a></td>
 					            <td class="remove-pr"><a><button th:type="button" class="purchase" name="" th:id="purchase">결제</button></a></td>

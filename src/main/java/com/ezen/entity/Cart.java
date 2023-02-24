@@ -46,6 +46,13 @@ public class Cart {
 	@JoinColumn(name="funding_seq", nullable=false, updatable=false)
 	private Funding funding;
 	
+	// 데이터 운반용
+	private Long funding_seq;
+	private String funding_name;
+	private int price;
+	private String filename;
+	private String username;
+	
 	public void setFunding(Funding funding) {
 		this.funding = funding;
 		funding.getCartList().add(this);
