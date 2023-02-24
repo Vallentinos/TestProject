@@ -63,7 +63,7 @@ public interface FundingRepository extends JpaRepository<Funding, Long>, Queryds
 	// SELECT * FROM (SELECT * FROM funding ORDER BY viewcount DESC) WHERE ROWNUM <2;
 	@Transactional
 	@Modifying
-	@Query(value="SELECT * FROM (SELECT * FROM funding ORDER BY viewcount DESC) WHERE ROWNUM<4", nativeQuery = true)
+	@Query(value="SELECT * FROM ( SELECT f.*, ROWNUM rn FROM funding f ORDER BY viewcount DESC) WHERE rn <= 3;", nativeQuery = true)
 	List<Funding> getBestFundingList(Funding funding);
 	
 	@Query("select fd from Funding fd")

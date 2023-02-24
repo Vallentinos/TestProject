@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ezen.entity.Cart;
-import com.ezen.entity.CartDetail;
 import com.ezen.persistence.CartRepository;
 
 import jakarta.persistence.EntityManager;

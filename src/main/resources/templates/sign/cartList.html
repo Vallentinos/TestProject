@@ -1,8 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default}">
+      layout:decorate="~{layout/default}"
+      >
+      
 <head>
     <meta charset="UTF-8">
     <title>장바구니</title>
@@ -46,7 +49,7 @@
 					        </tr>
 					    </thead>
 					    <tbody>
-					        <tr th:each="(index, cart) : ${cartList}" th:each-index="${index}" data-index="${index}">
+					        <tr th:each="cart : ${cartList}" th:data-index="${__${__${index} + 1}__}" id="cart${index}">
 					            <td class="thumbnail-img" >
 					                <input name="checkbox" type="checkbox" id="cart_seq1" th:value="${cart.cart_seq}" />
 					                <input type="hidden" name="cart_seq" id="cart_seq" th:value="${cart.cart_seq}" />
@@ -165,30 +168,37 @@ function DeleteClick() {
 }
 
 // 주문하기
-$(document).on('click', '#purchase', function() {
-	// 해당 줄의 정보 가져오기
-	var thisRow = $(this).closest('tr');
-	var cart_seq = thisRow.find('td:eq(0)').find('input').val();
-	var funding_seq = thisRow.find('td:eq(1)').find('input').val();
-	var quantity = thisRow.find('td:eq(4)').find('p:eq(0)').find('input').val();
+$(document).on('click', '.purchase', function() {
+    // get the data-index attribute of the clicked button's parent tr element
+    var dataIndex = $(this).closest('tr').attr('data-index');
+    // use the data-index attribute to construct the cartId selector
+    var cartSeqSelector = '#cart' + dataIndex + ' input[name="cart_seq"]';
+    var fundingSeqSelector = '#cart' + dataIndex + ' input[name="funding_seq"]';
+    var quantitySelector = '#cart' + dataIndex + ' input[name="quantity"]';
 
-	$.ajax({
-		type: 'POST',
-		url: '/cartPurchase',
-		contentType: 'application/json',
-		async: false,
-		data: JSON.stringify({
-			'cart_seq' : cart_seq,
-			'funding_seq' : funding_seq,
-			'quantity' : quantity,
-		}),
-		success: function(data) {
-			console.log("정보 불러오기 성공");
-		}, 
-		error : function() {
-			console.log("정보 불러오기 실패");
-		}
-	});
+    // get the values of the cartSeq, fundingSeq, and quantity inputs using their selectors
+    var cartSeq = $(cartSeqSelector).val();
+    var fundingSeq = $(fundingSeqSelector).val();
+    var quantity = $(quantitySelector).val();
+
+    // make the AJAX call
+    $.ajax({
+        type: 'POST',
+        url: '/cartPurchase',
+        contentType: 'application/json',
+        async: false,
+        data: JSON.stringify({
+            'cart_seq' : cart_seq,
+            'funding_seq' : funding_seq,
+            'quantity' : quantity,
+        }),
+        success: function(data) {
+            console.log("정보 불러오기 성공");
+        }, 
+        error : function() {
+            console.log("정보 불러오기 실패");
+        }
+    });
 });
 	
 function insertPurchase() {
