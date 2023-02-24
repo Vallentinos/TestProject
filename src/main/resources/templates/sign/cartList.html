@@ -32,47 +32,47 @@
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
                         <table class="table">
-                            <thead>
-                                <tr>
-                                	<th style="text-align: center"><!--  전체선택&nbsp;<input type="checkbox" id="checkAll" name="checkbox" onclick="checkAll();">--></th>
-                                    <th style="text-align: center">사진</th>
-                                    <th style="text-align: center">펀딩명</th>
-                                    <th style="text-align: center">금액</th>
-                                    <th style="text-align: center; width: 80px">수량</th>
-                                    <th style="text-align: center; width: 100px">총금액</th>
-                                    <th style="text-align: center">수정</th>
-                                    <th style="text-align: center">결제</th>
-                                    <th style="text-align: center">삭제</th>
-                                </tr>
-                            </thead>
-								<tbody>
-								    <tr th:each="(index, cart) : ${cartList}" th:each-index="${index}">
-								        <td class="thumbnail-img">
-								            <center><input name="checkbox" type="checkbox" id="cart_seq1" th:value="${cart.cart_seq}" /></center>
-								            <input type="hidden" name="cart_seq" id="cart_seq" th:value="${cart.cart_seq}" />
-								        </td>
-								        <td class="thumbnail-img"><a th:href="@{/getFunding(funding_seq=${cart.funding_seq})}"><img class="img-fluid" style="width:250px; height:200px" th:src="@{/image/}+ ${cart.filename}" /></a>
-								            <input type="hidden" name="funding_seq" id="funding_seq" th:value="${cart.funding_seq}" />
-								        </td>
-								        <td class="remove-pr" th:text="${cart.funding_name}"></td>
-								        <td class="remove-pr price">
-								            <p th:text="|${#numbers.formatInteger(cart.price,0,'COMMA')} 원|" name="price" data-content="price"></p>
-								            <input type="hidden" name="totalprice" id="totalprice" th:value="${cart.price}" />
-								        </td>
-								        <td class="quantity-box">
-								            <i class="fa-solid fa-minus" name="minus"></i>
-								            <p><input style="width: 100px" type="text" th:value="${cart.quantity}" name="quantity" id="quantity" class="c-input-text qty text" /></p>
-								            <i class="fa-solid fa-plus" name="plus"></i>
-								        </td>
-								        <td class="remove-pr total">
-								            <p th:text="|${#numbers.formatInteger(cart.totalprice,0,'COMMA')} 원|" id="sum" name="sum">원</p>
-								        </td>
-								        <td class="remove-pr"><a><button class="update" name="">확인</button></a></td>
-								        <td class="remove-pr"><a><button th:type="button" id="purchase" class="purchase" name="">결제</button></a></td>
-								        <td class="remove-pr"><a th:href="@{/deleteCart(cart_seq=${cart.cart_seq})}"><i class="fas fa-times"></i></a></td>
-								    </tr>
-								</tbody>
-                        </table>
+					    <thead>
+					        <tr>
+					            <th style="text-align: center"><!--  전체선택&nbsp;<input type="checkbox" id="checkAll" name="checkbox" onclick="checkAll();">--></th>
+					            <th style="text-align: center">사진</th>
+					            <th style="text-align: center">펀딩명</th>
+					            <th style="text-align: center">금액</th>
+					            <th style="text-align: center; width: 80px">수량</th>
+					            <th style="text-align: center; width: 100px">총금액</th>
+					            <th style="text-align: center">수정</th>
+					            <th style="text-align: center">결제</th>
+					            <th style="text-align: center">삭제</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr th:each="(index, cart) : ${cartList}" th:each-index="${index}" data-index="${index}">
+					            <td class="thumbnail-img" >
+					                <input name="checkbox" type="checkbox" id="cart_seq1" th:value="${cart.cart_seq}" />
+					                <input type="hidden" name="cart_seq" id="cart_seq" th:value="${cart.cart_seq}" />
+					            </td>
+					            <td class="thumbnail-img"><a th:href="@{/getFunding(funding_seq=${cart.funding_seq})}"><img class="img-fluid" style="width:250px; height:200px" th:src="@{/image/}+ ${cart.filename}" /></a>
+					                <input type="hidden" name="funding_seq" id="funding_seq" th:value="${cart.funding_seq}" />
+					            </td>
+					            <td class="remove-pr" th:text="${cart.funding_name}"></td>
+					            <td class="remove-pr price">
+					                <p th:text="|${#numbers.formatInteger(cart.price,0,'COMMA')} 원|" name="price" data-content="price"></p>
+					                <input type="hidden" name="totalprice" id="totalprice" th:value="${cart.price}" />
+					            </td>
+					            <td class="quantity-box">
+					                <i class="fa-solid fa-minus" name="minus"></i>
+					                <p><input style="width: 100px" type="text" th:value="${cart.quantity}" name="quantity" id="quantity" class="c-input-text qty text" /></p>
+					                <i class="fa-solid fa-plus" name="plus"></i>
+					            </td>
+					            <td class="remove-pr total">
+					                <p th:text="|${#numbers.formatInteger(cart.price,0,'COMMA')} 원|" id="sum" name="sum">원</p>
+					            </td>
+					            <td class="remove-pr"><a><button class="update" name="">확인</button></a></td>
+					            <td class="remove-pr"><a><button th:type="button" class="purchase" name="" th:id="purchase">결제</button></a></td>
+					            <td class="remove-pr"><a th:href="@{/deleteCart(cart_seq=${cart.cart_seq})}"><i class="fas fa-times"></i></a></td>
+					        </tr>
+					    </tbody>
+					</table>
                     </div>
                 </div>
             </div>		
@@ -80,7 +80,6 @@
                        <button class="btn btn-theme" type="button" onclick="DeleteClick();">선택삭제</button>
 
         </div>
-        </form>
     </div>
     <!-- End Cart -->
 </th:block>
@@ -131,30 +130,12 @@ $(".fa-plus").on("click", function(){
 	let quantity = $(this).parent("td").find("input").val();
 	$(this).parent("td").find("input").val(++quantity);
 	
-	/*
-	var thisRow = $(this).closest('tr');
-	var price = removeComma(thisRow.find('td:eq(3)').find('p:eq(0)').text());
-	var sum = quantity * price
-	console.log("price=", price)
-	console.log("quantity=", quantity)
-	console.log("sum=", sum);
-	thisRow.find('td:eq(5)').find('input').val(sum);
-	*/
 });
 $(".fa-minus").on("click", function(){
 	let quantity = $(this).parent("td").find("input").val();
 	if(quantity > 1){
 		$(this).parent("td").find("input").val(--quantity);	
-		
-		/*
-		var thisRow = $(this).closest('tr');
-		var price = removeComma(thisRow.find('td:eq(3)').find('p:eq(0)').text());
-		var sum = quantity * price
-		console.log("price=", price)
-		console.log("quantity=", quantity)
-		console.log("sum=", sum);
-		thisRow.find('td:eq(5)').find('input').val(sum);
-		*/
+
 	}
 });
 
@@ -184,41 +165,32 @@ function DeleteClick() {
 }
 
 // 주문하기
-$(document).ready(function() {
+$(document).on('click', '#purchase', function() {
+	// 해당 줄의 정보 가져오기
+	var thisRow = $(this).closest('tr');
+	var cart_seq = thisRow.find('td:eq(0)').find('input').val();
+	var funding_seq = thisRow.find('td:eq(1)').find('input').val();
+	var quantity = thisRow.find('td:eq(4)').find('p:eq(0)').find('input').val();
 
-	// Add index to each row in the table
-	$('tbody tr').each(function(index) {
-		$(this).attr('data-index', index + 1);
+	$.ajax({
+		type: 'POST',
+		url: '/cartPurchase',
+		contentType: 'application/json',
+		async: false,
+		data: JSON.stringify({
+			'cart_seq' : cart_seq,
+			'funding_seq' : funding_seq,
+			'quantity' : quantity,
+		}),
+		success: function(data) {
+			console.log("정보 불러오기 성공");
+		}, 
+		error : function() {
+			console.log("정보 불러오기 실패");
+		}
 	});
-
-	$('#purchase').on('click', function() {
-		 // 해당 줄의 정보 가져오기
-		 var thisRow = $(this).closest('tr');
-		 var cart_seq = thisRow.find('td:eq(0)').find('input').val();
-		 var funding_seq = thisRow.find('td:eq(1)').find('input').val();
-		 var quantity = thisRow.find('td:eq(4)').find('p:eq(0)').find('input').val();
-		 
-		 $.ajax({
-			type: 'POST',
-			url: '/cartPurchase',
-			contentType: 'application/json',
-			async: false,
-			data: JSON.stringify({
-				'cart_seq' : cart_seq,
-				'funding_seq' : funding_seq,
-				'quantity' : quantity,
-			}),
-			success: function(data) {
-                console.log("정보 불러오기 성공");
-			}, 
-			error : function() {
-				console.log("정보 불러오기 실패");
-			}
-		 });
-	  });
 });
-
-
+	
 function insertPurchase() {
 	window.location.replace("/cartPurchase");
 }
