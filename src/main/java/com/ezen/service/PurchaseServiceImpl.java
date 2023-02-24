@@ -3,6 +3,7 @@ package com.ezen.service;
 import com.ezen.entity.Purchase;
 import com.ezen.entity.QPurchase;
 import com.ezen.entity.Search;
+import com.ezen.persistence.CartRepository;
 import com.ezen.persistence.PurchaseRepository;
 import com.querydsl.core.BooleanBuilder;
 import jakarta.transaction.Transactional;
@@ -67,7 +68,6 @@ public class PurchaseServiceImpl implements PurchaseService {
             builder.and(qPurchase.funding.funding_name.like("%" + search.getSearchKeyword() + "%"));
         }
         Pageable pageable = PageRequest.of(page-1, 10, Sort.Direction.DESC, "purchaseSeq");
-        System.out.println("검색어" + builder);
         return purchaseRepository.findAll(builder, pageable);
     }
 }

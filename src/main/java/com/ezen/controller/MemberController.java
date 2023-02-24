@@ -61,8 +61,6 @@ public class MemberController {
     public String login(HttpServletRequest request, Member loginMember, Model model) {
         Member findMember = (Member) memberService.getMember(loginMember);
 
-        log.info("findMember: " + findMember);
-
         if (findMember != null && findMember.getPassword().equals(loginMember.getPassword())) {
             HttpSession session = request.getSession();
             session.setAttribute("loginMember", findMember);
@@ -88,8 +86,6 @@ public class MemberController {
     @PostMapping("/join")
     public String join(@Valid @ModelAttribute("member") Member member,
                        BindingResult result) {
-        // username 중복 확인
-        String username = member.getUsername();
 
         Optional<Member> memberId = memberRepository.findById(member.getUsername());
 
@@ -106,12 +102,10 @@ public class MemberController {
             result.addError(fieldError);
         }
         if(result.hasErrors()) {
-            log.info("회원가입 오류: " + result);
             return "sign/join";
         } else {
             member.setRole(Role.valueOf("MEMBER"));
             member.setDegree(Degree.valueOf("BRONZE"));
-            log.info("회원 가입 정보 :" + member);
             memberService.insertMember(member);
             return "redirect:login";
         }
@@ -179,7 +173,6 @@ public class MemberController {
     @PostMapping("/findId")
     public String findId(Member member, Model model) {
         Member memberId = memberService.findMemberId(member.getName(), member.getEmail());
-        log.info("아이디 찾기: " + memberId);
 
         if(memberId == null) {
             model.addAttribute("find", 0);

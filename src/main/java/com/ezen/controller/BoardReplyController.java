@@ -17,20 +17,9 @@ public class BoardReplyController {
 
     @Autowired
     BoardReplyService boardReplyService;
-//    @Autowired
-//    BoardReplyRepository boardReplyRepository;
-
-//    @RequestMapping("/getBoardReply")
-//    public @ResponseBody List<BoardReply> boardReplyList(@ModelAttribute BoardReply boardReply) {
-//        return boardReplyService.getBoardReplyList(board);
-//    }
 
     @PostMapping("/insertReply")
     public @ResponseBody void insertReply(@RequestBody Map<String, String> map, BoardReply boardReply) {
-        System.out.println("사용자명: "+map.get("replyUsername"));
-        System.out.println("게시판 Seq: " + map.get("boardSeq"));
-        System.out.println("댓글 내용: " + map.get("replyContent"));
-
         Member member = new Member();
         member.setUsername(map.get("replyUsername"));
         Board board = new Board();

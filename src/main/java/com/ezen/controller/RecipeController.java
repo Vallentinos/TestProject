@@ -40,8 +40,6 @@ public class RecipeController {
 	@Autowired
 	private HeartService heartService;
 	@Autowired
-	private HeartRepository heartRepository;
-	@Autowired
 	private RecipeProcedureService recipeProcedureService;
 	
 	@GetMapping("/recipeList")
@@ -80,7 +78,6 @@ public class RecipeController {
 		Recipe rp = recipeService.getRecipe(recipe);
 		recipeReply.setRecipe(rp);
 		List<RecipeReply> rrp = recipeReplyService.getRecipeReplyList(recipeReply);
-
 		//recipeReplyService.replyCount(recipeReply.getRecipe().getRecipe_seq());
 		model.addAttribute("recipe", rp);
 		model.addAttribute("recipeReply", rrp);

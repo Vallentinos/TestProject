@@ -34,7 +34,6 @@ public class BoardController {
 //    }
     @GetMapping("/board")
     public String getBoard(Board board, Model model) {
-        log.info("게시글 조회" + board);
         List<BoardReply> boardReplyList =boardReplyService.getBoardReplyList(board);
 
         if(boardReplyList != null && !boardReplyList.isEmpty()) {
@@ -79,11 +78,10 @@ public class BoardController {
     @PostMapping("/updateBoard")
     public String updateBoard(Board board) {
 
-        if(board.getCategory().equals(1)) {
+        if(board.getCategory().toString().equals("1")) {
             boardService.updateBoard(board);
             return "redirect:/boardList?category=1";
         } else {
-            board.setCategory("2");
             boardService.updateBoard(board);
             return "redirect:/boardList?category=2";
         }
@@ -91,10 +89,7 @@ public class BoardController {
 
     @GetMapping("/deleteBoard")
     public String deleteBoard(Board board) {
-        log.info(board.getBoardSeq() + "번째 게시글 삭제");
-        log.info(board.getCategory());
-
-        if(board.getCategory().equals(1)) {
+        if(board.getCategory().toString().equals("1")) {
             boardService.deleteBoard(board);
             return "redirect:/boardList?category=1";
         } else {
@@ -103,27 +98,11 @@ public class BoardController {
         }
     }
 
-//    @RequestMapping("/boardList")
-//    public String getBoardList(@RequestParam(value = "page", defaultValue = "0") int page, Search search, Model model) {
-//        if(search.getSearchCondition() == null) {
-//            search.setSearchCondition("TITLE");
-//        }
-//        if(search.getSearchKeyword() == null) {
-//            search.setSearchKeyword("");
-//        }
-//        Page<Board> boardList = boardService.getBoardList(page, search);
-//        log.info("게시글 목록: " + boardList.getContent());
-//        model.addAttribute("boardList", boardList);
-//
-//        return "board/freeBoardList";
-//    }
-
     @RequestMapping("/boardList")
     public String getFreeBoardList(@RequestParam(value = "page", defaultValue = "1") int page,
                                 @RequestParam(value = "category", defaultValue = "0") int category, Model model) {
 
         Page<Board> boardList = boardService.findByCategory(page, String.valueOf(category));
-        log.info("게시글 목록: " + boardList.getContent());
         model.addAttribute("boardList", boardList);
         model.addAttribute("category", category);
 
@@ -135,7 +114,6 @@ public class BoardController {
                                    @SessionAttribute("member") String username, Model model) {
 
         Page<Board> boardList = boardService.getMyBoardList(page, username);
-        log.info("게시글 목록: " + boardList.getContent());
         model.addAttribute("boardList", boardList);
 
         return "board/myBoardList";

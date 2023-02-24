@@ -31,8 +31,8 @@
  <th:block layout:fragment="content">
     <!-- Single Post Section Begin -->
     <section class="single-post spad">
-        <input th:type="hidden" id="recipe_seq" name="recipe_seq" th:value="${recipe.recipe_seq}">
-        <input th:type="hidden" id="good" name="good" th:value="${recipe.good}">
+    	<input th:type="hidden" id="recipe_seq" name="recipe_seq" th:value="${recipe.recipe_seq}">
+    	<input th:type="hidden" id="good" name="good" th:value="${recipe.good}">
         <input th:type="hidden" id="username" name="username" th:if="${session.loginMember != null}" th:value="${session.loginMember.username}">
         <input th:type="hidden" id="heart" name="heart" th:value="${heart}">
         <center><div class="single-post__hero set-bg" style="height: 500px;"><img th:src="@{/image/}+ ${recipe.filename}"></div></center>
@@ -44,7 +44,7 @@
                             <h2 th:text="${recipe.recipe_name}"></h2>
                         </div>
                     </div>
-                     <!-- 좋아요 버튼 시작 -->
+                      <!-- 좋아요 버튼 시작 -->
                     <div class="single-post__social__item" th:id="heart_area" th:if="${heart.toString().equals('0')}">
                         <ul>
                             <li>
@@ -146,15 +146,14 @@
     <script src="https://kit.fontawesome.com/f9c1d37a26.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
+    $(document).ready(function () {
+        let heart = $("#heart").val();
+        const good = $("#good").val();
+        const recipe_seq = $("#recipe_seq").val();
+        const username = $("#username").val();
 
-        $(document).ready(function () {
-            let heart = $("#heart").val();
-            const good = $("#good").val();
-            const recipe_seq = $("#recipe_seq").val();
-            const username = $("#username").val();
-
-            console.log(username);
-            console.log(heart);
+        console.log(username);
+        console.log(heart);
             // 좋아요 취소
             $('#deleteHeart').on('click', function () {
                 $.ajax({
@@ -198,11 +197,11 @@
                 });
             });
 
-            if(document.getElementById("username").value == "") {
-                alert("로그인 후 작성가능합니다.");
-                return false;
-            }
-            return true;
+        if(document.getElementById("username").value == "") {
+            alert("로그인 후 작성가능합니다.");
+            return false;
+        }
+        return true;
         });
     </script>
     </th:block>
