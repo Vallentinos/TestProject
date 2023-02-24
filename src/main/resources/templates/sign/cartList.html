@@ -45,31 +45,33 @@
                                     <th style="text-align: center">삭제</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr th:each="cart : ${cartList}">
-	                                <td class="thumbnail-img">
-	                                <center><input name = "checkbox" type="checkbox" id="cart_seq1" th:value="${cart.cart_seq}"></center>
-	                                <input type="hidden" name="cart_seq" id="cart_seq" th:value="${cart.cart_seq}">
-	                                </td>
-	                                <td class="thumbnail-img"><a th:href="@{/getFunding(funding_seq=${cart.funding_seq})}"><img class="img-fluid" style="width:250px; height:200px" th:src="@{/image/}+ ${cart.filename}"/></a>
-	                                <input type="hidden" name="funding_seq" id="funding_seq" th:value="${cart.funding_seq}">
-	                                </td>
-	                                <td class="remove-pr" th:text="${cart.funding_name}"></td>
-	                                <td class="remove-pr price"><p th:text="|${#numbers.formatInteger(cart.price,0,'COMMA')} 원|" name="price" data-content="price"></p>
-	                                <input type="hidden" name="totalprice" id="totalprice" th:value="${cart.price}">
-	                                </td>
-	                                <td class="quantity-box">
-	                                <i class="fa-solid fa-minus" name="minus"></i>
-	                                <p><input style="width: 100px" type="text" th:value="${cart.quantity}" name="quantity" id="quantity" class="c-input-text qty text"></p>
-	                                <i class="fa-solid fa-plus" name="plus"></i>
-	                                </td>
-	                                <td class="remove-pr total"><p th:text="|${#numbers.formatInteger(cart.totalprice,0,'COMMA')} 원|" id="sum" name="sum">원
-	                                </td> 
-	                                <td class="remove-pr"><a><button class="update" name="">확인</button></a></td>
-	                                <td class="remove-pr"><a><button th:type="button" id="purchase" class="purchase" name="">결제</button></a></td>
-	                                <td class="remove-pr"><a th:href="@{/deleteCart(cart_seq=${cart.cart_seq})}"><i class="fas fa-times"></i></a></td>
-                                </tr>
-                            </tbody>
+								<tbody>
+								    <tr th:each="(index, cart) : ${cartList}" th:each-index="${index}">
+								        <td class="thumbnail-img">
+								            <center><input name="checkbox" type="checkbox" id="cart_seq1" th:value="${cart.cart_seq}" /></center>
+								            <input type="hidden" name="cart_seq" id="cart_seq" th:value="${cart.cart_seq}" />
+								        </td>
+								        <td class="thumbnail-img"><a th:href="@{/getFunding(funding_seq=${cart.funding_seq})}"><img class="img-fluid" style="width:250px; height:200px" th:src="@{/image/}+ ${cart.filename}" /></a>
+								            <input type="hidden" name="funding_seq" id="funding_seq" th:value="${cart.funding_seq}" />
+								        </td>
+								        <td class="remove-pr" th:text="${cart.funding_name}"></td>
+								        <td class="remove-pr price">
+								            <p th:text="|${#numbers.formatInteger(cart.price,0,'COMMA')} 원|" name="price" data-content="price"></p>
+								            <input type="hidden" name="totalprice" id="totalprice" th:value="${cart.price}" />
+								        </td>
+								        <td class="quantity-box">
+								            <i class="fa-solid fa-minus" name="minus"></i>
+								            <p><input style="width: 100px" type="text" th:value="${cart.quantity}" name="quantity" id="quantity" class="c-input-text qty text" /></p>
+								            <i class="fa-solid fa-plus" name="plus"></i>
+								        </td>
+								        <td class="remove-pr total">
+								            <p th:text="|${#numbers.formatInteger(cart.totalprice,0,'COMMA')} 원|" id="sum" name="sum">원</p>
+								        </td>
+								        <td class="remove-pr"><a><button class="update" name="">확인</button></a></td>
+								        <td class="remove-pr"><a><button th:type="button" id="purchase" class="purchase" name="">결제</button></a></td>
+								        <td class="remove-pr"><a th:href="@{/deleteCart(cart_seq=${cart.cart_seq})}"><i class="fas fa-times"></i></a></td>
+								    </tr>
+								</tbody>
                         </table>
                     </div>
                 </div>
@@ -184,6 +186,11 @@ function DeleteClick() {
 // 주문하기
 $(document).ready(function() {
 
+	// Add index to each row in the table
+	$('tbody tr').each(function(index) {
+		$(this).attr('data-index', index + 1);
+	});
+
 	$('#purchase').on('click', function() {
 		 // 해당 줄의 정보 가져오기
 		 var thisRow = $(this).closest('tr');
@@ -210,6 +217,7 @@ $(document).ready(function() {
 		 });
 	  });
 });
+
 
 function insertPurchase() {
 	window.location.replace("/cartPurchase");
